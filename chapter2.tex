@@ -41,12 +41,10 @@ Bluetooth Low Energy está optimizado para tener un consumo de energía muy bajo
 Un dispositivo BLE se divide en tres partes: controlador, anfitrión y aplicación. Cada una de estas partes se divide a su vez en distintas capas que proveen la funcionalidad necesaria para operar. En la Figura~\ref{figuraBLEHardware} se muestra un esquema de esta estructura.
 
 \begin{figure}[h]%t=top, b=bottom, h=here
-
-    \includegraphics[scale=0.5]{figures/ble_hardware.png} % TODO hacer que esto no quede horrible
-
+	\centering
+    \includegraphics[scale=0.4]{figures/ble_hardware.png} % TODO hacer que esto no quede horrible
     \caption[Estructura hardware de un dispositivo BLE]{Estructura hardware de un dispositivo BLE}
-
-   \label{figuraBLEHardware}
+   	\label{figuraBLEHardware}
 \end{figure}
 
 \subsection{Controlador}
@@ -56,12 +54,10 @@ Un dispositivo BLE se divide en tres partes: controlador, anfitrión y aplicaci�
 Como ya se ha mencionado, la radio usada para BLE utiliza la banda ISM de 2,4 GHz. Esta banda se divide en 40 canales, desde los 2,4000 GHz hasta los 2,4835 GHz. De estos canales, 37 se utilizan para el envío de datos y los 3 restantes como canales de anuncio, para iniciar conexiones y mandar datos de broadcast.
 
 \begin{figure}[h]%t=top, b=bottom, h=here
-
-    \includegraphics[scale=0.5]{figures/ble_physical_layer.png} % TODO hacer que esto no quede horrible
-
+	\centering
+    \includegraphics[width=\linewidth]{figures/ble_physical_layer.png} % TODO hacer que esto no quede horrible
     \caption[División de la banda de frecuencia ISM]{División de la banda de frecuencia ISM en 40 canales}
-
-   \label{figuraBLEPhysicalLayer}
+   	\label{figuraBLEPhysicalLayer}
 \end{figure}
 
 Para evitar interferencias con otros dispositivos transmitiendo en la misma banda, mayormente WiFi y Bluetooth clásico, el estándar BLE utiliza una técnica llamada \textit{frequency hopping spread spectrum}, que hace que la radio “salte” entre los distintos canales en cada conexión.
@@ -125,11 +121,9 @@ Como explicamos anteriormente, BLE utiliza como máximo tres canales de frecuenc
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
-    \includegraphics[width=4in]{figures/ble_scan_example.png} % TODO hacer que esto no quede horrible
-
+    \includegraphics[width=\linewidth]{figures/ble_scan_example.png} % TODO hacer que esto no quede horrible
     \caption[Ejemplo de escaneo BLE]{Ejemplo de escaneo en BLE.}
-
-   \label{figuraBLEScan}
+   	\label{figuraBLEScan}
 \end{figure}
 
 Un dispositivo BLE puede comunicarse con el mundo exterior mediante dos vías: \textbf{broadcasting} y \textbf{conexiones}.
@@ -149,11 +143,9 @@ Como se ha explicado antes, el método utilizado para mandar información median
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
-    \includegraphics[scale=0.5]{figures/ble_scan_response.png} % TODO hacer que esto no quede horrible
-
+    \includegraphics[width=\linewidth]{figures/ble_scan_response.png} % TODO hacer que esto no quede horrible
     \caption[Esquema de Scan Response]{Esquema de Scan Response. El dispositivo que escanea recibe un paquete de advertising y envía esta respuesta para requerir un segundo paquete con más información.}
-
-   \label{figuraBLEScanResponse}
+   	\label{figuraBLEScanResponse}
 \end{figure}
 
 Si se desea que la comunicación se realice en los dos sentidos, o una mayor privacidad (dado que, en modo broadcast, todos los dispositivos que escuchan reciben la misma información), o bien se necesita enviar más datos de los que es posible con el modo broadcast, tendremos que usar el modo conexión.
@@ -184,10 +176,8 @@ ATT define el protocolo de atributos, cómo se estructuran y se pueden usar para
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
     \includegraphics[scale=0.5]{figures/ble_gatt_hierarchy.png} % TODO hacer que esto no quede horrible
-
     \caption[Esquema de la estructura de datos de GATT]{Esquema de la estructura de datos de GATT}
-
-   \label{figuraBLEGATTHierarchy}
+   	\label{figuraBLEGATTHierarchy}
 \end{figure}
 
 Un perfil basado en GATT tendrá entonces, como se muestra en la Figura~\ref{figuraBLEGATTHierarchy}, como mínimo un servicio, con una o más características que encapsulan a los atributos, y que pueden añadir más información a través de un descriptor.
