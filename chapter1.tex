@@ -20,7 +20,7 @@
 %\label{ch:chapter1}
 \label{makereference}
 
-Entre los años 2008 y 2009 comenzaron a usar el concepto Internet de las cosas (abreviado  IoT) como una apuesta hacia el futuro, cuyo objetivo era interconectar dispositivos digitales a internet.
+Entre los años 2008 y 2009 comenzaron a usar el concepto Internet de las cosas (abreviado IoT) como una apuesta hacia el futuro, cuyo objetivo era interconectar dispositivos digitales a internet.
 
 Esto ya es una realidad, con mayor frecuencia encontramos nuevos dispositivos capaces de conectarse a internet, permitiendo al usuario su manejo desde cualquier parte del mundo. Con ello se abre camino a nuevas oportunidades haciendo la vida más cómoda al usuario y proporcionándole mayor seguridad y control.
 
@@ -36,7 +36,6 @@ El concepto del internet de las cosas agrupa múltiples capacidades, algunas de 
 
 \textbf{Localización:} Se podrá saber la ubicación física del dispositivo en cualquier momento.
 
-
 El proyecto nace con el objetivo de emprender en esta tecnología, para ello se quiere conectar entre sí un sensor de acelerometría y un microprocesador para recibir y procesar sus datos. Dicho microprocesador debe estar provisto de Bluetooth de bajo consumo (en inglés, Bluetooth Low Energy o BLE) para poder enviar los datos vía Bluetooth a una aplicación móvil desarrollada en Android creada por los alumnos.
 
 Existe una amplia variedad de dispositivos de bajo coste que podrían considerarse, ya que el mercado de los microprocesadores de bajo consumo está ahora en expansión y hay gran oferta de estos dispositivos, con entornos de desarrollo que ofrecen distintas alternativas y que previsiblemente irán reduciéndose en los próximos años cuando predomine una tecnología que se imponga a las demás.
@@ -48,26 +47,27 @@ Destacamos 2 empresas que nos han ofrecido mejores soluciones de microprocesador
 \textbf{Nordic} está a la vanguardia de la revolución inalámbrica y son especialistas en Radiofrecuencia de consumo ultra bajo (ULP) redefiniendo nuevos procesadores por su bajo consumo, precios competitivos y aumentando la potencia de estos.
 La empresa de semiconductores integra procesadores basados en la arquitectura ARM de 32 y 64 bits que predominan en el mercado de la electrónica. Son procesadores relativamente simples siendo ideales para aplicaciones de bajo consumo y tiene un precio económico. 
 
-\textbf{Cypress} ofrece soluciones de alta calidad para sistemas integrados en el sector de la automoción, industria , redes y dispositivos móviles. Con amplia cartera de productos  diferenciados que incluye memorias flash NOR, F-RAM y SRAM, microcontroladores Traveo, soluciones programables solamente PSoC de la industria de chips, PMIC manejo de energía ICs analógicos y, controladores táctiles capacitivos de detección CapSense y controladores inalámbricos Bluetooth (BLE) como soluciones de conectividad USB de bajo consumo.
+\textbf{Cypress} es una empresa especializada en ofrecer soluciones de alta calidad para sistemas integrados en el sector aeroespacial, automoción, industria, redes, telecomunicaciones y electrónica de consumo, entre otros campos. Cubre una amplia gama de productos entre los cuales destacan los microprocesadores, memorias,  sistemas programables en chips , lo que denominan (en inglés Programable System on Chip o PSOC), controladores táctiles capacitivos y controladores inalámbricos Bluetooth de bajo consumo
 
 \section{Entornos de desarrollo}
 \label{makereference1.1}
 
-Con los dispositivos de bajo consumo nacen también entornos de desarrollo específicos para desarrollar todo su potencial. En el caso de la empresa Nordic el entorno de desarrollo utilizado es ARM mbed y es un proyecto de colaboración para promover Internet de las cosas (IoT) mediante herramientas de construcción de hardware y software que aceleren el desarrollo de dispositivos basados en ARM.
+Con los dispositivos de bajo consumo nacen también multitud de entornos de desarrollo específicos para desarrollar todo su potencial, lo que dificulta la exploración de hardware, pues es necesario trabajar con un nuevo entorno cada vez. 
 
-Gracias a mbed, el kit de desarrollo para Bluetooth Smart es soportado por un enfoque basado en la “nube” para escribir código, añadir librerías y compilar firmware. Se trata de un entorno de desarrollo integrado (IDE), integrado en lenguaje C++ sin depurador integrado.
+mbed, creada por la empresa ARM, es una plataforma de desarrollo \textit{online} que intenta hacer frente a esta variedad de entornos facilitando el desarrollo de prototipos de sistemas basados en microprocesadores.
 
-Soportado en todos los navegadores que se ejecutan en los sistemas Windows, Mac OSX, iOS,Android y Linux.
+Esta plataforma se creó para promover el Internet de las Cosas (IoT) y desarrollar proyectos mediante herramientas de construcción de hardware y software que aceleren el desarrollo de dispositivos basados en ARM.
 
-En el caso de la empresa Cypress nos encontramos otra plataforma de desarrollo diferente.
-Se llama PSoC Creator y es un entorno de diseño integrado (IDE) que permite desarrollar el hardware , editar firmware, compilar y depurar sistemas PSoC. Los periféricos PSoC se han diseñado utilizando una captura esquemática y sencilla interfaz de usuario (GUI) listo para la producción de componentes PSoC. Se representan por un icono que los usuarios pueden arrastrar y soltar en un diseño y configurar una amplia variedad de requisitos de aplicación.
+Su enfoque está basado en la \textit{nube} y permite codificar, añadir librerías y compilar desde un navegador web. La ventaja de programar desde cualquier navegador es que permite tener accesibilidad desde cualquier punto del mundo sólo con conexión a internet. Durante el Capítulo~\ref{makereference4} se explicará con más detalle este entorno y cómo nos ha ayudado a llevar a cabo este proyecto.
 
-También  se compone de una gran biblioteca de comunicaciones incluyendo I2C, USB, UART, SPI, y Bluetooth Low Energy. Herramientas para desarrollar componentes personalizados en Verilog o por medio de diagrama de máquina de estados, integrado en lenguaje C como código fuente y depurador integrado.
+La placa de desarrollo que se ha utilizado, la nRF51-DK de Nordic, que utiliza el SoC BLE nRF51822, es compatible con mbed.
 
 \section{Bluetooth Smart: Bluetooth de bajo consumo}
 \label{makereference1.2}
 
-Lo que conocíamos como Bluetooth 4.0 ha cambiado de nombre y mejorado notablemente sus características. Usa poca energía de consumo y latencia y funciona con dispositivos en un rango coro de hasta 50 metros. De ahora en adelante se conocerá como la versión inteligente, es decir, Bluetooth Smart. 
+Uno de los rasgos fundamentales de IoT es la conectividad.
+
+Lo que conocíamos como Bluetooth 4.0 ha cambiado de nombre y mejorado notablemente sus características. Usa poca energía de consumo y latencia y funciona con dispositivos en un rango corto de hasta 50 metros. De ahora en adelante se conocerá como la versión inteligente, es decir, Bluetooth Smart. 
 Sus características lo hacen perfecto para dispositivos que necesitan funcionar con una batería pequeña durante largos períodos.
 
 \section{Especificación del objetivo del proyecto}
