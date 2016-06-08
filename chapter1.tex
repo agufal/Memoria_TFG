@@ -16,23 +16,76 @@
 % | will automatically number the chapters.
 % +--------------------------------------------------------------------+
 
-\chapter{Chapter Title}
+\chapter{Introducción}
 %\label{ch:chapter1}
 \label{makereference}
 
-In this chapter, there will be examples of various features you
-may want to incorporate into your document. Here's an example of a
-figure inserted into the text:
+Entre los años 2008 y 2009 comenzaron a usar el concepto Internet de las cosas (abreviado  IoT) como una apuesta hacia el futuro, cuyo objetivo era interconectar dispositivos digitales a internet.
 
-\begin{figure}[htb]%t=top, b=bottom, h=here
+Esto ya es una realidad, con mayor frecuencia encontramos nuevos dispositivos capaces de conectarse a internet, permitiendo al usuario su manejo desde cualquier parte del mundo. Con ello se abre camino a nuevas oportunidades haciendo la vida más cómoda al usuario y proporcionándole mayor seguridad y control.
 
-    \includegraphics[height=2.5in]{figures/graph.png}
+Según empresas del sector tecnológico, en 2016 se espera que haya más  de 6.000 millones de dispositivos basados en este concepto.
 
-    \caption[Optional: Short caption to appear in List of
-    Figures]{Full caption to appear below the Figure}
+El concepto del internet de las cosas agrupa múltiples capacidades, algunas de ellas han sido utilizadas en el proyecto, estas se nombran a continuación:
 
-    \label{figure1}
-\end{figure}
+\textbf{Comunicación y cooperación:} Dispositivos capaces de conectarse a la red de internet y entre ellos, intercambiando datos y comunicándose con servidores.
+
+\textbf{Direccionamiento:} Los objetos serán localizables y configurables desde cualquier lugar de la red de internet.
+
+\textbf{Identificación:} Los objetos se identificarán en la red por medio de tecnologías como RFID (Radio Frecuency Identification), códigos de barras ópticos, NFC (Near Field Communication) y otras muchas formas.
+
+\textbf{Localización:} Se podrá saber la ubicación física del dispositivo en cualquier momento.
+
+
+El proyecto nace con el objetivo de emprender en esta tecnología, para ello se quiere conectar entre sí un sensor de acelerometría y un microprocesador para recibir y procesar sus datos. Dicho microprocesador debe estar provisto de Bluetooth de bajo consumo (en inglés, Bluetooth Low Energy o BLE) para poder enviar los datos vía Bluetooth a una aplicación móvil desarrollada en Android creada por los alumnos.
+
+Existe una amplia variedad de dispositivos de bajo coste que podrían considerarse, ya que el mercado de los microprocesadores de bajo consumo está ahora en expansión y hay gran oferta de estos dispositivos, con entornos de desarrollo que ofrecen distintas alternativas y que previsiblemente irán reduciéndose en los próximos años cuando predomine una tecnología que se imponga a las demás.
+
+Unas de las  empresas más especializadas en este tipo de tecnologías y que resaltan en este mercado son \textbf{Nordic Semiconductor, Cypress Semiconductor, Texas Instruments (TI), Cambridge Silicon Radio (CSR)} y \textbf{Dialog Semiconductor}.
+
+Destacamos 2 empresas que nos han ofrecido mejores soluciones de microprocesadores de bajo consumo según las necesidades del proyecto:
+
+\textbf{Nordic} está a la vanguardia de la revolución inalámbrica y son especialistas en Radiofrecuencia de consumo ultra bajo (ULP) redefiniendo nuevos procesadores por su bajo consumo, precios competitivos y aumentando la potencia de estos.
+La empresa de semiconductores integra procesadores basados en la arquitectura ARM de 32 y 64 bits que predominan en el mercado de la electrónica. Son procesadores relativamente simples siendo ideales para aplicaciones de bajo consumo y tiene un precio económico. 
+
+\textbf{Cypress} ofrece soluciones de alta calidad para sistemas integrados en el sector de la automoción, industria , redes y dispositivos móviles. Con amplia cartera de productos  diferenciados que incluye memorias flash NOR, F-RAM y SRAM, microcontroladores Traveo, soluciones programables solamente PSoC de la industria de chips, PMIC manejo de energía ICs analógicos y, controladores táctiles capacitivos de detección CapSense y controladores inalámbricos Bluetooth (BLE) como soluciones de conectividad USB de bajo consumo.
+
+\section{Entornos de desarrollo}
+\label{makereference1.1}
+
+Con los dispositivos de bajo consumo nacen también entornos de desarrollo específicos para desarrollar todo su potencial. En el caso de la empresa Nordic el entorno de desarrollo utilizado es ARM mbed y es un proyecto de colaboración para promover Internet de las cosas (IoT) mediante herramientas de construcción de hardware y software que aceleren el desarrollo de dispositivos basados en ARM.
+
+Gracias a mbed, el kit de desarrollo para Bluetooth Smart es soportado por un enfoque basado en la “nube” para escribir código, añadir librerías y compilar firmware. Se trata de un entorno de desarrollo integrado (IDE), integrado en lenguaje C++ sin depurador integrado.
+
+Soportado en todos los navegadores que se ejecutan en los sistemas Windows, Mac OSX, iOS,Android y Linux.
+
+En el caso de la empresa Cypress nos encontramos otra plataforma de desarrollo diferente.
+Se llama PSoC Creator y es un entorno de diseño integrado (IDE) que permite desarrollar el hardware , editar firmware, compilar y depurar sistemas PSoC. Los periféricos PSoC se han diseñado utilizando una captura esquemática y sencilla interfaz de usuario (GUI) listo para la producción de componentes PSoC. Se representan por un icono que los usuarios pueden arrastrar y soltar en un diseño y configurar una amplia variedad de requisitos de aplicación.
+
+También  se compone de una gran biblioteca de comunicaciones incluyendo I2C, USB, UART, SPI, y Bluetooth Low Energy. Herramientas para desarrollar componentes personalizados en Verilog o por medio de diagrama de máquina de estados, integrado en lenguaje C como código fuente y depurador integrado.
+
+\section{Bluetooth Smart: Bluetooth de bajo consumo}
+\label{makereference1.2}
+
+Lo que conocíamos como Bluetooth 4.0 ha cambiado de nombre y mejorado notablemente sus características. Usa poca energía de consumo y latencia y funciona con dispositivos en un rango coro de hasta 50 metros. De ahora en adelante se conocerá como la versión inteligente, es decir, Bluetooth Smart. 
+Sus características lo hacen perfecto para dispositivos que necesitan funcionar con una batería pequeña durante largos períodos.
+
+\section{Especificación del objetivo del proyecto}
+\label{makereference1.3}
+
+El proyecto consiste en medir valores de acelerometría por medio de un sensor y conectado a través de Bluetooth Smart a un dispositivo móvil para posteriormente poder analizar los datos reproducidos desde una aplicación móvil creada en Android.
+La medición se hará durante un recorrido determinado por el usuario y utilizando el GPS de su dispositivo móvil Android,podrá visualizar el recorrido realizado observando la aceleración que realizó así como otros datos de interés del recorrido del usuario.
+El medio de transporte utilizado será una bicicleta y el dispositivo irá sujeto y fijado al cuadro de la misma.
+
+%\begin{figure}[htb]%t=top, b=bottom, h=here
+%
+%    \includegraphics[height=2.5in]{figures/graph.png}
+%
+%    \caption[Optional: Short caption to appear in List of
+%    Figures]{Full caption to appear below the Figure}
+%
+%   \label{figure1}
+%\end{figure}
 
 % +--------------------------------------------------------------------+
 % |To create cross-references to figures, tables and segments
@@ -50,16 +103,16 @@ figure inserted into the text:
 % |
 % +--------------------------------------------------------------------+
 
-Here is an example of a Table:
+%Here is an example of a Table:
 
-\begin{table}
+%\begin{table}
 
 % +--------------------------------------------------------------------+
 % | We include the command \begin{center} to center the table
 % | horizontally on the page.  Note use of the command \end{center}
 % | to turn off centering after the table is defined.
 % +--------------------------------------------------------------------+
-    \begin{center}
+%    \begin{center}
 
 % +--------------------------------------------------------------------+
 % | The table is created with this command
@@ -78,19 +131,19 @@ Here is an example of a Table:
 % |   | for a vertical line
 % +--------------------------------------------------------------------+
 
-    \begin{tabular}[c]{|c|c|c|}
-        \hline
-        Column 1 Heading & Column 2 Heading & Column 3 Heading \\
-        \hline
-        Col 1 Row 1 & Col 2 Row 1 & Col 3 Row 1\\
-        Col 1 Row 2 & Col 2 Row 2 & Col 3 Row 2\\
-        Col 1 Row 3 & Col 2 Row 3 & Col 3 Row 3\\
-        \hline
-    \end{tabular}
-    \caption{Caption to appear below the table}
-    \label{table1}
-   \end{center}
-\end{table}
+%    \begin{tabular}[c]{|c|c|c|}
+%        \hline
+%        Column 1 Heading & Column 2 Heading & Column 3 Heading \\
+%        \hline
+%        Col 1 Row 1 & Col 2 Row 1 & Col 3 Row 1\\
+%        Col 1 Row 2 & Col 2 Row 2 & Col 3 Row 2\\
+%        Col 1 Row 3 & Col 2 Row 3 & Col 3 Row 3\\
+%        \hline
+%    \end{tabular}
+%    \caption{Caption to appear below the table}
+%    \label{table1}
+%   \end{center}
+%\end{table}
 
 % +--------------------------------------------------------------------+
 % | Replace \section headings below with the title of your
@@ -98,22 +151,19 @@ Here is an example of a Table:
 % | 1.2, 1.3, etc.
 % +--------------------------------------------------------------------+
 
-\section{Making References to Figures or Tables}
-\label{makereference1.1}
+%In this paragraph, we want to refer to Fig.~\ref{figure1}
+%mentioned at the beginning of this chapter.  We also refer to the
+%Table~\ref{table1}.
 
-In this paragraph, we want to refer to Fig.~\ref{figure1}
-mentioned at the beginning of this chapter.  We also refer to the
-Table~\ref{table1}.
+%\section{Making a Reference to a Chapter Subsection}
+%\label{makereference1.2}
 
-\section{Making a Reference to a Chapter Subsection}
-\label{makereference1.2}
+%In this section, we refer back to text mentioned in
+%Section~\ref{makereference1.1} on page~\pageref{makereference1.1}.
 
-In this section, we refer back to text mentioned in
-Section~\ref{makereference1.1} on page~\pageref{makereference1.1}.
+%\section{Making a Citation}
+%\label{makereference1.3}
 
-\section{Making a Citation}
-\label{makereference1.3}
-
-Here's an example of a citation to a single
-work.~\citet{CT:Weiner:1999} It's also possible to make multiple
-citations.~\citet{CT:Phillips:1985, ARP:Loy:1974}
+%Here's an example of a citation to a single
+%work.~\citet{CT:Weiner:1999} It's also possible to make multiple
+%citations.~\citet{CT:Phillips:1985, ARP:Loy:1974}
