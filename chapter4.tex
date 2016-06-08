@@ -4,8 +4,23 @@
 \chapter{Desarrollo Hardware}
 \label{makereference4}
 
+Antes de comenzar programando la funcionalidad principal de este proyecto tuvimos que aprender a utilizar herramientas y conceptos, como los entornos de desarrollo de las placas de Nordic y de Cypress o los protocolos SPI e I2C y el propio BLE, con los que no habíamos trabajado nunca, por lo que primero realizamos una serie de pruebas para familiarizarnos y así decidir cuál de ellas elegiríamos finalmente para el proyecto.
+
 \section{Pruebas iniciales con Cypress y Nordic}
 \label{makereference4.1}
+
+Lo primero que hicimos una vez tuvimos las placas fue buscar códigos de ejemplo con funcionalidades parecidas a lo que íbamos a tratar en el proyecto.
+
+\textbf{Cypress} pone a disposición de cualquier desarrollador que desee realizar pruebas un repositorio en GitHub con 100 proyectos que sirven de ejemplo para utilizar la funcionalidad BLE de sus dispositivos PSoC.
+
+\textbf{mbed} dispone de un repositorio propio donde cualquier usuario puede subir proyectos. Estos proyectos son muy sencillos de buscar e importar desde el propio compilador.
+
+Como primera toma de contacto con las posibilidades de las placas para comunicarse físicamente con otros dispositivos, tuvimos que realizar un pequeño circuito para comprobar el funcionamiento de la recepción de datos a través de una fotoresistencia.
+
+Para recibir los datos utilizamos el componente MCP3008 ADC, un conversor análogico-digital capaz de convertir una entrada analógica de voltaje en un valor binario.
+
+Una vez creado el circuito comprobamos con un voltímetro que dejar pasar menos luz sobre la fotoresistencia disminuía la cantidad de voltaje. El rango de voltaje que pudimos comprobar fue de 0,82 V a 1,82 V con luz ambiente.
+
 
 \section{Acerca de los entornos de desarrollo}
 \label{makereference4.2}
