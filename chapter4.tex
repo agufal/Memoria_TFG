@@ -9,17 +9,39 @@ Antes de comenzar programando la funcionalidad principal de este proyecto tuvimo
 \section{Pruebas iniciales con Cypress y Nordic}
 \label{makereference4.1}
 
-Lo primero que hicimos una vez tuvimos las placas fue buscar códigos de ejemplo con funcionalidades parecidas a lo que íbamos a tratar en el proyecto.
+Una vez tuvimos las placas, el primer paso fue buscar códigos de ejemplo con funcionalidades parecidas a lo que íbamos a tratar en el proyecto.
 
-\textbf{Cypress} pone a disposición de cualquier desarrollador que desee realizar pruebas un repositorio en GitHub con 100 proyectos que sirven de ejemplo para utilizar la funcionalidad BLE de sus dispositivos PSoC.
+\textbf{Cypress} pone a disposición de cualquier desarrollador que desee realizar pruebas un repositorio en GitHub con 100 proyectos que sirven de ejemplo para utilizar la funcionalidad BLE de sus dispositivos PSoC. Aparte han desarrollado una aplicación Android llamada \textit{CySmart} para comprobar el funcionamiento de algunos de estos ejemplos.
 
-\textbf{mbed} dispone de un repositorio propio donde cualquier usuario puede subir proyectos. Estos proyectos son muy sencillos de buscar e importar desde el propio compilador.
+\textbf{mbed} dispone de un repositorio propio donde cualquier usuario puede subir proyectos para cualquier dispositivo compatible con mbed. Estos proyectos son muy sencillos de buscar e importar desde el propio compilador. ARM mbed también dispone de una app Android, ésta llamada \textit{nRF Master Control Panel}, que permite hacer algunas pruebas.
 
-Como primera toma de contacto con las posibilidades de las placas para comunicarse físicamente con otros dispositivos, tuvimos que realizar un pequeño circuito para comprobar el funcionamiento de la recepción de datos a través de una fotoresistencia.
-
-Para recibir los datos utilizamos el componente MCP3008 ADC, un conversor análogico-digital capaz de convertir una entrada analógica de voltaje en un valor binario.
+Como primera toma de contacto con las posibilidades de las placas para comunicarse físicamente con otros dispositivos realizamos un pequeño circuito consistente en una fotoresistencia conectada a un conversor analógico-digital MCP3008, capaz de convertir una entrada analógica de voltaje en un valor binario, el cual se transmitiría por el bus SPI.
 
 Una vez creado el circuito comprobamos con un voltímetro que dejar pasar menos luz sobre la fotoresistencia disminuía la cantidad de voltaje. El rango de voltaje que pudimos comprobar fue de 0,82 V a 1,82 V con luz ambiente.
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics{figures/mcp3008_esquema.PNG} % TODO hacer que esto no quede horrible
+    \caption[TODO]{TODO}
+   	\label{figuraMCPEsquema}
+\end{figure}
+
+Para realizar la transferencia de datos por SPI colocamos como master la placa de desarrollo y como esclavo el circuito de la fotoresistencia. Conectamos los 4 pines correspondiente en cada de placa: para la trasmisión de datos (MOSI, MISO), frecuencia de reloj (SCLK) y selección del esclavo (nSS). Ambos entornos de desarrollo ofrecen ejemplos de módulo SPI con lo que fue fácil hacer funcionar el sistema una vez conectados los pines correctos.
+
+Para comprobar en un principio si se recibían bien los datos, en la placa nRF51-DK de Nordic utilizamos sus 4 LED’S verdes, apagándolos o encenciéndolos según el valor ya digitalizado que recibe. De igual forma al probarlo con PSoc BLE de Cypress interactuamos con su LED RGB, utilizando los colores verde, azul y rojo para representar los diferentes datos que recibía del circuito.
+
+Estas primeras pruebas nos sirvieron para comprobar la correcta recepción de datos, pero el objetivo era llevarlos a una aplicación desarrollada en Android. Por tanto nuestra primera toma de contacto con el desarrollo de la aplicación Android (Figura~\ref{figuraAPPPrueba}) que hacía uso del módulo BLE fue en este momento, centrado más en la funcionalidad más que en el diseño. Esta aplicación funcional nos permitió probar conceptos como el de activar desde dentro de una app el Bluetooth del móvil, realizar un escaneo para detectar los dispositivos con Bluetooth cercanos, conectarse a éstos y enviar datos. Para verificar que funcionaba correctamente, escribimos mensajes de log  que se pueden visualizar en el entorno de desarrollo Android Studio.
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering 	
+    \includegraphics[width=\textwidth]{figures/app_piloto2.PNG} % TODO hacer que esto no quede horrible
+   	\caption[Aplicación piloto para comprobar la conexión Bluetooth]{Aplicación piloto para comprobar la conexión Bluetooth}
+   	\label{figuraAPPPrueba}
+
+\end{figure}
+
+El siguiente paso hacia nuestro aprendizaje fue conectar por I2C el Acelerómetro XTRINSIC-SENSE-BOARD Element14. Documentándonos desde su datasheet, conectamos los pines correctos con la placa, e iniciamos las pruebas de recepción de datos.
+Nuevamente, la galería de proyectos que oferece el entorno mbed nos permitió desarrollar el código de comunicación I2C sin mucha dificultad.
 
 
 \section{Acerca de los entornos de desarrollo}
