@@ -36,7 +36,7 @@ El concepto del internet de las cosas agrupa múltiples capacidades, algunas de 
 
 \textbf{Localización:} Se podrá saber la ubicación física del dispositivo en cualquier momento.
 
-El proyecto nace con el objetivo de emprender en esta tecnología, para ello se quiere conectar entre sí un sensor de acelerometría y un microprocesador para recibir y procesar sus datos. Dicho microprocesador debe estar provisto de Bluetooth de bajo consumo (en inglés, Bluetooth Low Energy o BLE) para poder enviar los datos vía Bluetooth a una aplicación móvil desarrollada en Android creada por los alumnos.
+El proyecto nace con el objetivo de emprender en esta tecnología, para ello se quiere conectar entre sí un sensor de acelerometría y un microprocesador para recibir y procesar sus datos. Dicho microprocesador debe estar provisto de Bluetooth de Bajo Consumo (en inglés, Bluetooth Low Energy o BLE) para poder enviar los datos vía Bluetooth a una aplicación móvil desarrollada en Android creada por los alumnos.
 
 Existe una amplia variedad de dispositivos de bajo coste que podrían considerarse, ya que el mercado de los microprocesadores de bajo consumo está ahora en expansión y hay gran oferta de estos dispositivos, con entornos de desarrollo que ofrecen distintas alternativas y que previsiblemente irán reduciéndose en los próximos años cuando predomine una tecnología que se imponga a las demás.
 
@@ -45,7 +45,7 @@ Unas de las  empresas más especializadas en este tipo de tecnologías y que res
 Destacamos 2 empresas que nos han ofrecido mejores soluciones de microprocesadores de bajo consumo según las necesidades del proyecto:
 
 \textbf{Nordic} está a la vanguardia de la revolución inalámbrica y son especialistas en Radiofrecuencia de consumo ultra bajo (ULP) redefiniendo nuevos procesadores por su bajo consumo, precios competitivos y aumentando la potencia de estos.
-La empresa de semiconductores integra procesadores basados en la arquitectura ARM de 32 y 64 bits que predominan en el mercado de la electrónica. Son procesadores relativamente simples siendo ideales para aplicaciones de bajo consumo y tiene un precio económico. 
+Esta empresa de semiconductores integra procesadores basados en la arquitectura ARM de 32 y 64 bits que predominan en el mercado de la electrónica. Son procesadores relativamente simples siendo ideales para aplicaciones de bajo consumo y tiene un precio económico. 
 
 \textbf{Cypress} es una empresa especializada en ofrecer soluciones de alta calidad para sistemas integrados en el sector aeroespacial, automoción, industria, redes, telecomunicaciones y electrónica de consumo, entre otros campos. Cubre una amplia gama de productos entre los cuales destacan los microprocesadores, memorias,  sistemas programables en chips , lo que denominan (en inglés Programable System on Chip o PSOC), controladores táctiles capacitivos y controladores inalámbricos Bluetooth de bajo consumo
 
@@ -65,17 +65,18 @@ Todo lo anterior hace de la compatibilidad con mbed una característica atractiv
 \section{Bluetooth Smart: Bluetooth de bajo consumo}
 \label{makereference1.2}
 
-Uno de los rasgos fundamentales de IoT es la conectividad.
+Uno de los rasgos fundamentales de IoT es la conectividad. Para lograrla tenemos a nuestra disposición una gran variedad de tecnologías inalámbricas, entre ellas \textit{zygbee}, \textit{narrow-band} o \textit{WiFi}; pero la que sin duda alguna ofrece el menor consumo de energía posible es \textit{Bluetooth Low Energy} (BLE, también denominado \textit{Bluetooth Smart}). 
+Esta tecnología nace del Bluetooth clásico, pero marca su propio camino al sacrificar ancho de banda y períodos de envío continuados para lograr la meta de ser muy eficiente energéticamente, lo que lo hace perfecto para dispositivos que necesitan funcionar con una batería pequeña durante largos períodos. El hecho de ser parte de Bluetooth y poderse complementar con él hace que actualmente esté presente en todos los teléfonos móviles del mercado. A esto ayuda que grandes empresas del mundo de la tecnología y las telecomunicaciones respalden BLE.
 
-Lo que conocíamos como Bluetooth 4.0 ha cambiado de nombre y mejorado notablemente sus características. Usa poca energía de consumo y latencia y funciona con dispositivos en un rango corto de hasta 50 metros. De ahora en adelante se conocerá como la versión inteligente, es decir, Bluetooth Smart. 
-Sus características lo hacen perfecto para dispositivos que necesitan funcionar con una batería pequeña durante largos períodos.
+En el Capítulo~\ref{makereference2} hablaremos de cómo se estructura e implementa Bluetooth Low Energy. 
 
 \section{Especificación del objetivo del proyecto}
 \label{makereference1.3}
 
-El proyecto consiste en medir valores de acelerometría por medio de un sensor y conectado a través de Bluetooth Smart a un dispositivo móvil para posteriormente poder analizar los datos reproducidos desde una aplicación móvil creada en Android.
-La medición se hará durante un recorrido determinado por el usuario y utilizando el GPS de su dispositivo móvil Android,podrá visualizar el recorrido realizado observando la aceleración que realizó así como otros datos de interés del recorrido del usuario.
-El medio de transporte utilizado será una bicicleta y el dispositivo irá sujeto y fijado al cuadro de la misma.
+El objetivo de este proyecto consiste en medir el esfuerzo realizado por un ciclista durante un trayecto. Esto se consigue combinando los valores proporcionados por un acelerómetro y los datos de posicionamiento por GPS para poder elaborar un mapa del trayecto en el que se indiquen las zonas que, por pendiente, estado del terreno, etc. supusieron un mayor esfuerzo. Además se ofrecerá más información que pueda ser calculada con estos datos, como la velocidad media o la distancia total recorrida, por ejemplo.
+
+Para la comodidad del usuario, toda la información de la ruta se recogerá en su dispositivo móvil, del que se obtendrán los datos de localización y que se conectará a través de Bluetooth Smart con el sensor de acelerometría. De este modo, con un simple gesto podrá visualizar fácilmente los datos más relevantes. 
+
 
 %\begin{figure}[htb]%t=top, b=bottom, h=here
 %
