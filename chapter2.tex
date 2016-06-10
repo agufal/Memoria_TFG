@@ -31,7 +31,7 @@ El objetivo de Bluetooth Low Energy es complementar al Bluetooth clásico y ser 
 
 Aunque comparta con Bluetooth su nombre y mucha de la tecnología utilizada, se deben considerar diferentes tecnologías, ya que tienen objetivos de diseño completamente diferentes.
 
-El Bluetooth clásico (también denominado \textit{BR/EDR}~\cite{bluetoothCS}) se diseñó para conectar diferentes dispositivos, empezando por teléfonos móviles y ordenadores, y con el tiempo añadiendo más casos de uso como auriculares inalámbricos, streaming de música, impresión inalámbrica, etc. Cada uno de estos casos requería cada vez más ancho de banda, por lo que se fueron añadiendo radios cada vez más rápidas (la primera versión transmitía a 1 Mbps, aumentando a 3 Mbps en la versión 2.0, hasta los cientos de megabits por segundo en su versión 3.0)
+El Bluetooth clásico (también conocido como \textit{BR/EDR}~\cite{bluetoothCS}) se diseñó para conectar diferentes dispositivos, empezando por teléfonos móviles y ordenadores, y con el tiempo añadiendo más casos de uso como auriculares inalámbricos, streaming de música, impresión inalámbrica, etc. Cada uno de estos casos requería cada vez más ancho de banda, por lo que se fueron añadiendo radios cada vez más rápidas (la primera versión transmitía a 1 Mbps, aumentando a 3 Mbps en la versión 2.0, hasta los cientos de megabits por segundo en su versión 3.0)
 
 Bluetooth Low Energy está optimizado para tener un consumo de energía muy bajo, por lo que se reduce el ancho de banda, y está pensado para aplicarse en dispositivos con un coste muy bajo, con una complejidad a su vez baja. Cada capa de su arquitectura se ha optimizado para reducir el consumo de energía al realizar una determinada tarea. Por ejemplo, relajando los parámetros de la radio usada por la capa física, comparándola con la radio del Bluetooth clásico, se puede usar menos energía cuando se está transmitiendo o recibiendo datos.
 
@@ -76,7 +76,7 @@ Para evitar interferencias con otros dispositivos transmitiendo en la misma band
 \textbf{Control Lógico de Enlace y Protocolo de Adaptación (Logical Link Control and Adaptation Protocol, L2CAP).} Esta capa provee dos funcionalidades: actúa como capa multiplexora de los protocolos, es decir, recibe los protocolos de las capas superiores y los encapsula en el formato de paquete estándar BLE (y viceversa). Asimismo, fragmenta los paquetes que se le envían desde las capas superiores para que quepan en los 27 bytes que tienen como máximo los paquetes de transmisión y vuelve a combinar los paquetes fragmentados que recibe.
 
 
-\textbf{Protocolo de Atributos (Attribute Protocol, ATT).} Define una serie de reglas para acceder a los datos de un dispositivo. Propone una manera de encapsular estos datos en forma de \textit{atributos}, que permiten identificarlos asignando a cada uno un handle de 16 bits y un Identificador Único Universal (Universal Unique Identifier, UUID) y restringir su acceso mediante una serie de permisos. Los campos que forman un atributo se explicarán más adelante en la Sección~\ref{makereference2.4.1}. En resumen, ATT un protocolo muy simple, en el que un cliente puede acceder a los atributos de un servidor.\\
+\textbf{Protocolo de Atributos (Attribute Protocol, ATT).} Define una serie de reglas para acceder a los datos de un dispositivo. Propone una manera de encapsular estos datos en forma de \textit{atributos}, que permiten identificarlos asignando a cada uno un handle de 16 bits y un Identificador Único Universal (Universal Unique Identifier, UUID) y restringir su acceso mediante una serie de permisos. Los campos que forman un atributo se explicarán más adelante en la Sección~\ref{makereference2.4.2}. En resumen, ATT un protocolo muy simple, en el que un cliente puede acceder a los atributos de un servidor.\\
 Para definir la comunicación eficaz de estos atributos entre el cliente y el servidor, ATT define seis tipos de mensajes:
 \begin{itemize} % Hay imagenes de esto, por si no queda clarinete
 	\item Solicitudes enviadas desde el cliente al servidor.
@@ -117,7 +117,9 @@ La aplicación es la capa más alta y la responsable de contener la lógica, la 
 
 BLE tiene un único formato de paquete que soporta dos tipos: de datos y de anuncio, esto reduce la complejidad de la implementación de la pila de protocolos.
 
-Los paquetes de anuncio tienen como propósito retransmitir datos sin necesidad de una conexión o descubrir esclavos para iniciar una conexión.  Tienen una capacidad útil de 31 bytes, que se utilizan para incluir información sobre el dispositivo y sus capacidades, pero también se pueden incluir los datos que se quieran transmitir. Estos paquetes se envían a intervalos definidos previamente, que pueden ir desde los 20 ms hasta los 10.24 s. Con un intervalo más corto se aumenta la frecuencia de envío de información, pero también significa que tiene un mayor consumo. En nuestro caso definimos un intervalo de 1 s.
+Los paquetes de anuncio tienen como propósito retransmitir datos sin necesidad de una conexión o descubrir esclavos para iniciar una conexión. Tienen una capacidad útil de 31 bytes, que se utilizan para incluir información sobre el dispositivo y sus capacidades, pero también se pueden incluir los datos que se quieran transmitir. Estos paquetes se envían a intervalos definidos previamente, que pueden ir desde los 20 ms hasta los 10.24 s. Con un intervalo más corto se aumenta la frecuencia de envío de información, pero también significa que tiene un mayor consumo. En nuestro caso definimos un intervalo de 1 s.
+
+Los paquetes de datos se utilizan una vez establecida una conexión para enviar información entre dos dispositivos. Tienen una capacidad de 27 bytes, menor que los de anuncio, esto es debido a que los paquetes de datos ofrecen la posibilidad de encriptar el mensaje, para lo que se necesitan 4 bytes para la comprobación de la integridad del mismo. Para simplificar el diseño de la Capa de Enlace, los paquetes de datos que no utilicen encriptación también cuentan con esta capacidad.
 
 Como explicamos anteriormente, BLE utiliza como máximo tres canales de frecuencia para mandar los paquetes de anuncio, y debido a que el dispositivo que anuncia y el que escanea no están sincronizados de ningún modo, los paquetes se recibirán cuando ambos se solapen aleatoriamente, como se ve en el ejemplo presentado en la Figura~\ref{figuraBLEScan}.
 
@@ -133,7 +135,7 @@ Un dispositivo BLE puede comunicarse con el mundo exterior mediante dos vías: \
 \subsection{Modo Broadcast}
 \label{makereference2.3.1}
 
-Mediante broadcasting es posible enviar datos en un único sentido a cualquier dispositivo que esté escaneando en el radio de escucha. Es la única forma de mandar datos a más de un dispositivo a la vez.
+Mediante broadcasting es posible enviar datos en un único sentido a cualquier dispositivo que esté escaneando en el radio de escucha. Es la única forma de mandar datos a más de un dispositivo a la vez, aunque no permite transmitir una gran cantidad de información.
  
 Los dispositivos pueden tomar los siguientes roles GAP:
 \begin{itemize}
@@ -171,7 +173,7 @@ La principal ventaja de las conexiones es la posibilidad de organizar los datos 
 El Perfil de Atributo Genérico expande el Protocolo de Atributo (ATT) estableciendo en detalle cómo intercambiar todos los datos del usuario a través de una conexión BLE. También provee un \textit{framework} para todos los perfiles basados en GATT, que cubren casos de uso específicos y asegura el intercambio entre dispositivos de diferentes marcas. Todos los perfiles BLE estándar están basados en GATT y deben cumplir sus especificaciones para operar correctamente.
 
 \subsection{Roles}
-\label{makereference2.4.2}
+\label{makereference2.4.1}
 
 GATT define dos roles que pueden adoptar los dispositivos interconectados, que hereda directamente del Protocolo de Atributos (ATT):
 \begin{itemize}
@@ -181,7 +183,7 @@ GATT define dos roles que pueden adoptar los dispositivos interconectados, que h
 \end{itemize}
 
 \subsection{Jerarquía de datos}
-\label{makereference2.4.1}
+\label{makereference2.4.2}
 
 ATT define el protocolo de atributos, cómo se estructuran y se pueden usar para intercambiar información sobre dispositivos, pero no ofrece más estructura. GATT va más allá y establece una jerarquía de datos estricta para organizar los atributos y permitir su reutilización, de modo que el acceso de información entre cliente y servidor siga una serie de reglas que se puedan usar en cualquier perfil basado en GATT.
 
