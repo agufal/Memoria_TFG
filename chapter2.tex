@@ -12,7 +12,7 @@
 \chapter{Bluetooth Low Energy}
 \label{makereference2}
 
-Bluetooth Low Energy (BLE, también denominado Bluetooth Smart) empezó como parte de la Bluetooth 4.0 Core Specification. Diseñado originalmente por Nokia bajo el nombre de Wibree, fue luego adoptado por el Bluetooth Special Interest Group (SIG).
+Bluetooth Low Energy (BLE, también denominado Bluetooth Smart) empezó como parte de la Bluetooth 4.0 Core Specification. Diseñado originalmente por Nokia bajo el nombre de Wibree, fue luego adoptado por el Bluetooth Special Interest Group (SIG).~\cite{BLE:Townsend:2014}~\cite{BLE:Heydon:2012}~\cite{bluetoothCS}
 
 El objetivo de Bluetooth Low Energy es complementar al Bluetooth clásico y ser la tecnología inalámbrica con el menor consumo energético posible. También tiene como objetivo llegar a una gran cantidad de objetos que hasta ahora no disponían de ninguna conectividad inalámbrica. Para lograr abarcar tantos escenarios, se necesita tener un coste muy bajo, lo cual se consigue con tres elementos clave:
 
@@ -31,9 +31,11 @@ El objetivo de Bluetooth Low Energy es complementar al Bluetooth clásico y ser 
 
 Aunque comparta con Bluetooth su nombre y mucha de la tecnología utilizada, se deben considerar diferentes tecnologías, ya que tienen objetivos de diseño completamente diferentes.
 
-El Bluetooth clásico se diseñó para conectar diferentes dispositivos, empezando por teléfonos móviles y ordenadores, y con el tiempo añadiendo más casos de uso como auriculares inalámbricos, streaming de música, impresión inalámbrica, etc. Cada uno de estos casos requería cada vez más ancho de banda, por lo que se fueron añadiendo radios cada vez más rápidas (la primera versión transmitía a 1 Mbps, aumentando a 3 Mbps en la versión 2.0, hasta los cientos de megabits por segundo en su versión 3.0)
+El Bluetooth clásico (también denominado \textit{BR/EDR}~\cite{bluetoothCS}) se diseñó para conectar diferentes dispositivos, empezando por teléfonos móviles y ordenadores, y con el tiempo añadiendo más casos de uso como auriculares inalámbricos, streaming de música, impresión inalámbrica, etc. Cada uno de estos casos requería cada vez más ancho de banda, por lo que se fueron añadiendo radios cada vez más rápidas (la primera versión transmitía a 1 Mbps, aumentando a 3 Mbps en la versión 2.0, hasta los cientos de megabits por segundo en su versión 3.0)
 
 Bluetooth Low Energy está optimizado para tener un consumo de energía muy bajo, por lo que se reduce el ancho de banda, y está pensado para aplicarse en dispositivos con un coste muy bajo, con una complejidad a su vez baja. Cada capa de su arquitectura se ha optimizado para reducir el consumo de energía al realizar una determinada tarea. Por ejemplo, relajando los parámetros de la radio usada por la capa física, comparándola con la radio del Bluetooth clásico, se puede usar menos energía cuando se está transmitiendo o recibiendo datos.
+
+Precisamente por tener estos objetivos tan diferentes, Bluetooth clásico y BLE pueden coexistir en la misma aplicación en lo que se denomina \textit{Modo Dual} (en inglés \textit{Dual-Mode}), de modo que se puede conectar por ejemplo a unos auriculares inalámbricos por medio de BR/EDR mientras se accede a un dispositivo de bajo consumo, como un \textit{wearable}, por BLE.
 
 \section{Tecnología}
 \label{makereference2.2}
@@ -74,9 +76,9 @@ Para evitar interferencias con otros dispositivos transmitiendo en la misma band
 \textbf{Control Lógico de Enlace y Protocolo de Adaptación (Logical Link Control and Adaptation Protocol, L2CAP).} Esta capa provee dos funcionalidades: actúa como capa multiplexora de los protocolos, es decir, recibe los protocolos de las capas superiores y los encapsula en el formato de paquete estándar BLE (y viceversa). Asimismo, fragmenta los paquetes que se le envían desde las capas superiores para que quepan en los 27 bytes que tienen como máximo los paquetes de transmisión y vuelve a combinar los paquetes fragmentados que recibe.
 
 
-\textbf{Protocolo de Atributos (Attribute Protocol, ATT).} Define una serie de reglas para acceder a los datos de un dispositivo. Es un protocolo cliente/servidor sin estados, simple, independiente del rol del dispositivo como maestro o esclavo, los dispositivos pueden ser clientes o servidores. Los datos se organizan en forma de atributos, a los que se asigna un handle de 16 bits, un Identificador Único Universal (Universal Unique Identifier, UUID) y una serie de permisos.
-ATT define seis tipos de mensajes:
-\begin{itemize}
+\textbf{Protocolo de Atributos (Attribute Protocol, ATT).} Define una serie de reglas para acceder a los datos de un dispositivo. Propone una manera de encapsular estos datos en forma de \textit{atributos}, que permiten identificarlos asignando a cada uno un handle de 16 bits y un Identificador Único Universal (Universal Unique Identifier, UUID) y restringir su acceso mediante una serie de permisos. Los campos que forman un atributo se explicarán más adelante en la Sección~\ref{makereference2.4.1}. En resumen, ATT un protocolo muy simple, en el que un cliente puede acceder a los atributos de un servidor.\\
+Para definir la comunicación eficaz de estos atributos entre el cliente y el servidor, ATT define seis tipos de mensajes:
+\begin{itemize} % Hay imagenes de esto, por si no queda clarinete
 	\item Solicitudes enviadas desde el cliente al servidor.
 	\item Respuestas del servidor a una solicitud del cliente.
 	\item Comandos enviados del cliente al servidor que no necesitan respuesta. 
@@ -88,8 +90,8 @@ ATT define seis tipos de mensajes:
 
 
 \textbf{Perfil de Atributo Genérico (Generic Attribute Profile, GATT).} Este perfil se asienta en el Protocolo de Atributos, y define los tipos de atributos y cómo se utilizan. 
-Para ello utiliza una jerarquía de capas y un modelo de abstracción de datos. Los datos ahora se encapsulan en servicios, que a su vez consisten en una o más características que pueden estar definidas por un descriptor. Estas capas se sirven de metadatos para dar más información sobre los datos que se están manejando, como nombres, unidades, etc.
-Este perfil y el Perfil de Acceso Genérico son importantes a la hora de comunicar dispositivos por BLE, por lo que se explicarán con detalle más adelante.
+Para ello utiliza una jerarquía de capas y un modelo de abstracción de datos. Los datos ahora se encapsulan en servicios, que a su vez consisten en una o más características que pueden estar definidas por un descriptor. Estas capas se sirven de metadatos para dar más información sobre los datos que se están manejando, como nombres, unidades, etc.\\
+Este perfil es importante a la hora de comunicar dispositivos por BLE, y se usa como base para generar perfiles específicos para determinados casos de uso, como la medición del ritmo cardíaco de una persona o el acceso al nivel de batería disponible de un dispositivo. En la Sección~\ref{makereference2.4} se detallarán los componentes de un perfil GATT.
 
 
 \textbf{Perfil de Acceso Genérico (Generic Access Profile, GAP).} Define cómo los dispositivos realizan procedimientos de control como el descubrimiento de otros dispositivos, conexiones entre éstos o la seguridad, es decir, dicta cómo interactúan dos dispositivos en un nivel más bajo.
@@ -168,6 +170,16 @@ La principal ventaja de las conexiones es la posibilidad de organizar los datos 
 
 El Perfil de Atributo Genérico expande el Protocolo de Atributo (ATT) estableciendo en detalle cómo intercambiar todos los datos del usuario a través de una conexión BLE. También provee un \textit{framework} para todos los perfiles basados en GATT, que cubren casos de uso específicos y asegura el intercambio entre dispositivos de diferentes marcas. Todos los perfiles BLE estándar están basados en GATT y deben cumplir sus especificaciones para operar correctamente.
 
+\subsection{Roles}
+\label{makereference2.4.2}
+
+GATT define dos roles que pueden adoptar los dispositivos interconectados, que hereda directamente del Protocolo de Atributos (ATT):
+\begin{itemize}
+	\item \textbf{Cliente.} Envía peticiones al servidor y recibe respuestas. El cliente GATT no tiene conocimiento sobre los atributos del servidor por adelantado, por lo que primero tiene que recopilar información sobre éstos mediante un descubrimiento de servicios.
+
+	\item \textbf{Servidor.} Recibe las peticiones del cliente y responde en consecuencia. Es el rol responsable de guardar los datos y de hacer que estén disponibles para el cliente, organizándolos en atributos. Todos los dispositivos BLE que se vendan deben incluir al menos un servidor GATT básico, aunque únicamente envíe un error como respuesta.
+\end{itemize}
+
 \subsection{Jerarquía de datos}
 \label{makereference2.4.1}
 
@@ -180,7 +192,14 @@ ATT define el protocolo de atributos, cómo se estructuran y se pueden usar para
    	\label{figuraBLEGATTHierarchy}
 \end{figure}
 
-Un perfil basado en GATT tendrá entonces, como se muestra en la Figura~\ref{figuraBLEGATTHierarchy}, como mínimo un servicio, con una o más características que encapsulan a los atributos, y que pueden añadir más información a través de un descriptor.
+Un perfil basado en GATT tendrá entonces, como se muestra en la Figura~\ref{figuraBLEGATTHierarchy}, como mínimo un servicio, con una o más características que encapsulan a los atributos, y que pueden añadir más información a través de un descriptor.\\
+De esta forma, si tenemos por ejemplo un dispositivo del que nos interesa sacar información sobre un sensor de temperatura y obtener el estado de la batería, tendríamos la siguiente estructura:
+\begin{itemize}
+	\item Un \textbf{servicio} para la temperatura y otro para el nivel de batería.
+	\item Dentro de cada servicio, una \textbf{característica} que encapsule ambos valores.
+	\item De manera opcional, se puede agregar un \textbf{descriptor} dentro de alguna de las características.
+\end{itemize}
+Cada uno de estos niveles ofrece un modo de identificarlos y más información sobre ellos, por lo que un cliente que no conozca de qué servicios dispone un servidor, puede realizar lo que se denomina una \textit{exploración de servicios} y así conocer qué información puede obtener.\\
 
 \textbf{Atributo.} Los atributos son las entidades de datos más pequeñas definidas en GATT y ATT. Son piezas de información direccionables que pueden contener los datos del usuario o metadatos sobre la estructura y el agrupamiento de los diferentes atributos contenidos en el servidor.
 
@@ -188,7 +207,7 @@ Dado que GATT y ATT sólo pueden operar con atributos, los clientes y servidores
 \begin{itemize}
 	\item \textit{Handle.} Es la parte que hace a un atributo direccionable. Consiste en un identificador de 16 bits para cada atributo en un servicio GATT particular, y se garantiza que no se modificará entre transacciones o conexiones.  El valor 0x0000 denota un handle inválido, por lo que el rango de handles disponible es de 0xFFFF (65535), aunque en la práctica el número de atributos en un servidor es más cercano a la docena.
 
-	\item \textit{Tipo.} Esta parte consiste en un UUID de 16, 32 o 128 bits que determina qué tipo de datos están presentes en el campo de valor del atributo, permitiendo por ejemplo mecanismos para encontrar un atributo directamente por su tipo.
+	\item \textit{Tipo.} Esta parte consiste en un UUID de 16, 32 o 128 bits que determina qué tipo de datos están presentes en el campo de valor del atributo, permitiendo por ejemplo mecanismos para encontrar un atributo directamente por su tipo. En la Sección~\ref{makereference2.4.3} se muestra cómo se forman los UUIDs para su uso en BLE.
 
 	\item \textit{Permisos.} Los permisos son metadatos que especifican qué operaciones se pueden ejecutar en cada atributo y con qué requisitos de seguridad. ATT y GATT definen los siguientes permisos:
 	\begin{itemize}
@@ -200,11 +219,11 @@ Dado que GATT y ATT sólo pueden operar con atributos, los clientes y servidores
 	\item \textit{Valor.} Contiene los propios datos sin restricción de qué tipo sean, aunque con un máximo de 512 bytes según la especificación. Dependiendo del tipo de atributo, puede contener información adicional sobre el atributo o un valor útil.
 \end{itemize}
 
-\textbf{Servicio.} Los servicios agrupan atributos conceptualmente relacionados. La forma de definir un servicio es a través de uno o más atributos denominados definición de servicio, de los cuales el primero es el que actúa de declaración de servicio y el resto pueden definir las siguientes capas, como características y descriptores.
+\textbf{Servicio.} Los servicios agrupan atributos conceptualmente relacionados. La forma de definir un servicio es a través de uno o más atributos denominados \textit{definición de servicio}, de los cuales el primero es el que actúa de declaración de servicio y el resto pueden definir las siguientes capas, como características y descriptores.
 
 Se puede comparar un servicio con una clase en cualquier lenguaje de programación orientado a objetos. 
 
-\textbf{Característica.} Las características se pueden entender como contenedores para los datos del usuario. Siempre incluyen dos atributos: la declaración de la característica, que ofrece metadatos sobre los datos en sí, y el valor de la característica, que es un atributo completo con los datos del usuario. Adicionalmente, una característica puede contener un descriptor, que es un atributo que provee de más metadatos.
+\textbf{Característica.} Las características se pueden entender como contenedores para los datos del usuario. Siempre incluyen dos atributos: la \textit{declaración de la característica}, que ofrece metadatos sobre los datos en sí, y el \textit{valor de la característica}, que es un atributo completo con los datos del usuario. Adicionalmente, una característica puede contener un descriptor, que es un atributo que provee de más metadatos.
 
 \textbf{Descriptor.} Se utilizan principalmente para proveer al cliente con información adicional sobre las características y su valor. Se ubican siempre entre la definición de la característica y el valor del atributo de la característica y están compuestos por un único atributo cuyo UUID define el tipo de descriptor y el campo de valor contiene lo que esté definido para ese tipo de descriptor.
 
@@ -214,16 +233,6 @@ A continuación se detallan algunos de los descriptores más utilizados:
 	\item \textit{Descriptor de usuario de una característica:} contiene una descripción que el usuario puede leer consistente en una cadena de caracteres en UTF-8. Por ejemplo “Temperatura en el salón”.
 	\item \textit{Descriptor de configuración de la característica por el cliente:} actúa como un “interruptor”, deshabilitando las actualizaciones que envía el servidor.
 	\item \textit{Descriptor de formato de presentación de una característica:} contiene el tipo de variable de la característica, por ejemplo booleano, cadena de caracteres, enteros, etc.
-\end{itemize}
-
-\subsection{Roles}
-\label{makereference2.4.2}
-
-GATT define dos roles que pueden adoptar los dispositivos interconectados, que hereda directamente del Protocolo de Atributos (ATT):
-\begin{itemize}
-	\item \textbf{Cliente.} Envía peticiones al servidor y recibe respuestas. El cliente GATT no tiene conocimiento sobre los atributos del servidor por adelantado, por lo que primero tiene que recopilar información sobre éstos mediante un descubrimiento de servicios.
-
-	\item \textbf{Servidor.} Recibe las peticiones del cliente y responde en consecuencia. Es el rol responsable de guardar los datos y de hacer que estén disponibles para el cliente, organizándolos en atributos. Todos los dispositivos BLE que se vendan deben incluir al menos un servidor GATT básico, aunque únicamente envíe un error como respuesta.
 \end{itemize}
 
 \subsection{UUIDs}
