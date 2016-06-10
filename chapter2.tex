@@ -201,9 +201,9 @@ De esta forma, si tenemos por ejemplo un dispositivo del que nos interesa sacar 
 	\item Dentro de cada servicio, una \textbf{característica} que encapsule ambos valores.
 	\item De manera opcional, se puede agregar un \textbf{descriptor} dentro de alguna de las características.
 \end{itemize}
-Cada uno de estos niveles ofrece un modo de identificarlos y más información sobre ellos, por lo que un cliente que no conozca de qué servicios dispone un servidor, puede realizar lo que se denomina una \textit{exploración de servicios} y así conocer qué información puede obtener.\\
+Cada uno de estos niveles ofrece un modo de identificarlos y más información sobre ellos, por lo que un cliente que no conozca de qué servicios dispone un servidor, puede realizar lo que se denomina una \textit{exploración de servicios} y así conocer qué información puede obtener. Todos los niveles se especifícan mediante atributos, ya que es la base sobre la que se asienta GATT, por ello es necesario definir primero en qué consiste un atributo.\\
 
-\textbf{Atributo.} Los atributos son las entidades de datos más pequeñas definidas en GATT y ATT. Son piezas de información direccionables que pueden contener los datos del usuario o metadatos sobre la estructura y el agrupamiento de los diferentes atributos contenidos en el servidor.
+\textbf{Atributo.} Los atributos son las entidades de datos más pequeñas definidas en GATT y ATT. Son piezas de información direccionables que pueden contener los datos del usuario o metadatos sobre la estructura y el agrupamiento de cada una de las capas.
 
 Dado que GATT y ATT sólo pueden operar con atributos, los clientes y servidores que deseen realizar una interacción deberán organizarse de esta forma. Cada atributo contiene los datos del usuario e información sobre el propio atributo, contenidos en los siguientes campos:
 \begin{itemize}
