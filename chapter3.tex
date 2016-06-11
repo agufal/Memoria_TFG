@@ -62,11 +62,11 @@ Destacamos dos grupos: placas con bluetooth incorporado y componentes sólo con 
 
 Las empresas consideradas para comprar la placa de desarrollo con microprocesador fueron Nordic, Texas Instruments (TI) y Cypress.
 
-En el grupo analizado para chips con Bluetooth sin procesador contemplamos las empresas Nordic,  Texas Instruments (TI), CSR y Dialog. 
+En el grupo analizado para chips con Bluetooth sin procesador contemplamos las empresas Nordic, Texas Instruments (TI), CSR y Dialog. 
 
 Al considerar que era más interesante tener una placa con procesador, sensores y periféricos descartamos los chips individuales y optamos por una opción más completa.
 
-\section{Criterios para la selección}
+\section{Análisis de los candidatos}
 \label{makereference3.3}
 
 \subsection{Aspectos técnicos}
@@ -79,17 +79,16 @@ Como podemos observar en la tabla de microprocesadores con bluetooth predomina e
 
 \textbf{ARM} Es el acrónimo de Advanced RISC Machines (ARM), una empresa conjunta entre Acorn Computers, Apple Computer (ahora Apple Inc.) y VLSI Technology.
 
-Son microprocesadores RISC, acrónimo de Reduced Instruction Set Computing, computación de instrucciones reducidas. Esto quiere decir que se necesitan cargar  las instrucciones  de los datos de memoria a un registro antes de trabajar con ellos. Permite con esta tecnología reducir el consumo de energía con el mismo rendimiento computacional.
+Son microprocesadores RISC, acrónimo de Reduced Instruction Set Computing, computación de instrucciones reducidas. Esto quiere decir que se necesitan cargar las instrucciones  de los datos de memoria a un registro antes de trabajar con ellos. Permite con esta tecnología reducir el consumo de energía con el mismo rendimiento computacional.
 
 Estos procesadores soportan la arquitectura Thumb, que se emplea en algunos procesadores ARM para aplicaciones que necesiten mejorar la densidad de código. Consiste en usar un conjunto de instrucciones de 16 bits que es una forma comprimida del set de instrucciones ARM de 32 bits.
-Observamos que la mayoría de los procesadores eran ARM Cortex-M0 32 bit.
 
-Otro aspecto a considerar es la \textbf{memoria flash}, esta permite tanto la creación rápida de prototipos y la programación en el sistema. Es un tipo de memoria electrónica no volátil que se puede borrar y reprogramar fácilmente.
+Otro aspecto a considerar es la \textbf{memoria flash}, esta permite la programación en el sistema. Es un tipo de memoria electrónica no volátil que se puede borrar y reprogramar fácilmente.
 En estos microprocesadores se utiliza también para mantener códigos de control, por ejemplo los comandos básicos para manejos de dispositivos de entrada y salida del sistema (BIOS).
-En nuestra búsqueda vimos que había de dos capacidades, de 256 KB y 128KB, con la opción de menor capacidad cubría las necesidades del proyecto.
+En nuestra búsqueda vimos que había de dos capacidades, de 256 KB y 128KB, en nuestro caso no esperabamos utilizar demasiado espacio en memoria, ya que sólo guardaríamos el código compilado, por lo que decidimos que la opción de menor capacidad cubría las necesidades del proyecto.
 
-La memoria RAM es importante,ya que gestiona la capacidad de datos que puede manejar el procesador. Es una memoria volátil, es decir que almacena los datos de forma temporal y al apagar la placa de la fuente de alimentación, se pierde su contenido.
-En la búsqueda pudimos encontrar de dos tipos de almacenamiento tanto de  256 KB como de 128 KB.
+La memoria RAM no era tampoco un aspecto muy decisivo a la hora de elegir una plataforma, ya que no esperabamos una gran necesidad de memoria para el código y los datos que íbamos a manejar.
+En la búsqueda pudimos encontrar de dos tipos de almacenamiento tanto de 256 KB como de 128 KB.
 
 En cuanto a los periféricos de entrada-salida, necesitábamos que la placa tuviera un protocolo de envío de datos maestro-esclavo, la mayoría de las placas de desarrollo incluyen protocolos SPI e I2C.
 
