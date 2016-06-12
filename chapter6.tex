@@ -3,29 +3,109 @@
 \chapter{Aplicación Android}
 \label{makereference6}
 
+La parte del servidor Bluetooth se ha implementado sobre la plataforma Android. La principal razón por la que optamos por esta plataforma es la de que para programar una aplicación en iOS es necesario disponer de un ordenador Macintosh, condición que no cumplíamos, y debido a que de los tres componentes del grupo, dos teníamos disponible un dispositivo Android, nos pareció un paso lógico.
+
+Hay numerosos frameworks disponibles para programar aplicaciones Android, pero nos decantamos por la herramienta que ofrece Google, Android Studio, que al estar basado en la plataforma Eclipse nos resultó familiar, a la vez que proveía muchas funcionalidades específicas para Android.
+
+Una aplicación Android se implementa en Java para especificar la funcionalidad y en XML para estructurar la parte gráfica. Aunque tuvimos que familiarizarnos con el modo de gestionar las vistas en Android, el hecho de basar la funcionalidad en Java nos ha facilitado desarrollar rápidamente aplicaciones sencillas para probar funcionalidades y, eventualmente, la aplicación final. 
+
+Hemos basado el diseño en el patrón Modelo-Vista-Controlador, comunicando la vista y la funcionalidad mediante comandos. En la siguiente imagen se muestra un diagrama de clases para ver cómo hemos estructurado el código de la app.
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[scale=0.5]{figures/diagrama_clases_general.png} % TODO hacer que esto no quede horrible
+    \caption[Diagrama de clases general de la aplicación Android]{Diagrama de clases general de la aplicación Android}
+   	\label{figuraDiagramaClasesGeneral}
+\end{figure}
+
 \section{Front-End}
 \label{makereference6.1}
+
+Para la interfaz de usuario, hemos implementado una actividad principal, que se mantiene estática durante toda la vida de la aplicación, con fragmentos que se van cargando dentro de ésta. La actividad principal mantiene una barra de título en la parte superior que se encuentra siempre presente en la que hemos añadido un menú Hamburger, que permite desplegar una lista con accesos directos a las opciones de la app, bien pulsando sobre el icono o deslizando el dedo de izquierda a derecha. Este diseño es muy utilizado en apps Android.
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[scale=0.2]{figures/app_menu_deslizable.png} % TODO hacer que esto no quede horrible
+    \caption[Menú deslizable de la aplicación Android]{Menú deslizable que aparece al pulsar en el botón de menú o al deslizar de izquierda a derecha}
+   	\label{figuraAPPMenu}
+\end{figure}
+
+A continuación explicaremos en detalle los fragmentos que se cargan en la app.
 
 \subsection{Vista principal}
 \label{makereference6.1.1}
 
+La primera pantalla que aparece al iniciar la aplicación. Está dividida en dos pestañas, sesión y actividades, lo que facilita acceder a las funcionalidades principales de la app. La pestaña que aparece por defecto es la de sesión, que es la que lleva a cabo el objetivo principal de este proyecto, ya que permite iniciar la recogida de datos del acelerómetro y del GPS. La forma de llevar a cabo esta funcionalidad se explicará más adelante.
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[width=\linewidth]{figures/app_tabfragment.png} % TODO hacer que esto no quede horrible
+    \caption[Vista principal de la app Android]{Vista principal de la app. De izquierda a derecha: Sesión sin iniciar, Sesión iniciada y Vista de sesiones}
+   	\label{figuraAPPPrincipal}
+\end{figure}
+
+En esta pestaña de sesión tenemos dos botones, inicio y parar, un cronómetro y un espacio en el que se nos va a mostrar la información de acelerometría recibida.
+
+La segunda pestaña a la que se puede acceder es la de actividades, que muestra una lista de todas las sesiones guardadas. El nombre nos muestra el día y hora a la que se realizó. Pulsando en cada una de estas actividades lanza un fragmento con los datos de la ruta.
+
+
 \subsection{Configuración y Ayuda}
 \label{makereference6.1.2}
+
+En la pantalla de configuración se permite al usuario realizar la conexión con la placa. Para ello contiene un botón para escanear los dispositivos BLE cercanos, que aparecerán en una lista en la zona inferior, y al pulsar en uno de los elementos de esta lista nos conectaremos y así podremos comenzar la sesión.
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[scale=0.2]{figures/app_config_ayuda.png} % TODO hacer que esto no quede horrible
+    \caption[Vista de configuración y de ayuda]{Vistas de Configuración y Ayuda}
+   	\label{figuraAPPConfigAyuda}
+\end{figure}
 
 \subsection{Vista resumen de sesión}
 \label{makereference6.1.3}
 
+Esta vista se lanza cuando terminamos una sesión (botón parar), o cargamos una actividad desde la pestaña de actividades. En ella se muestra un mapa con la ruta realizada, la cual se colorea según la aceleración producida en cada momento. También nos muestra el tiempo, la distancia recorrida y la velocidad media del trayecto.
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[scale=0.2]{figures/app_resumen_sesion.png} % TODO hacer que esto no quede horrible
+    \caption[Vista de resumen de sesión]{Vista de Resúmen de Sesión. Se muestra la ruta y la información recogida.}
+   	\label{figuraAPPSesion}
+\end{figure}
+
 \section{Funcionamiento}
 \label{makereference6.2}
+
+A continuación describiremos la funcionalidad de los casos de uso más importantes de la aplicación, detallando la estructura de clases utilizada.
 
 \subsection{Conexión al dispositivo BLE}
 \label{makereference6.2.1}
 
+Para realizar la comunicación entre la placa y el móvil utilizamos una clase (BLEGatt) con el patrón Singleton. Para configurar esta clase de modo que se realice la conexión tenemos un clase auxiliar llamada BluetoothManager, que utiliza un BLEScanner para escanear los dispositivos cercanos. A esta clase se accede desde la clase ConfigFragment llamando al controlador, y éste a su vez crea un comando, ComandoEscanear, que es el que utiliza a BluetoothManager para realizar las conexiones. 
+
 \subsection{GPS}
 \label{makereference6.2.2}
+
+Android por motivos de seguridad no permite activar el gps del móvil desde una app, por lo que lo único que hacemos es avisar al sistema operativo para que abra la ventana de configuración de la ubicación. 
 
 \subsection{Funcionamiento durante la marcha}
 \label{makereference6.2.3}
 
+Para llevar a cabo una sesión tenemos tres clases que heredan de Thread: BluetoothThread, CoordenadasThread y FileThread. De ese modo, la lectura de los datos del acelerómetro, los datos de la ubicación y la escritura en el archivo se hacen de manera independiente. 
+
+BluetoothThread utiliza la clase BLEGatt explicada anteriormente para leer las características recibidas, debido a que la lectura de los datos en BLEGatt se realiza con un callback no podemos recoger la información de forma inmediata, así que registramos al BluetoothThread como observador de BLEGatt de forma que éste avise a BluetoothThread.
+
+CoordenadasThread aprovecha una clase de Android llamada LocationManager que permite establecer una frecuencia de actualización de la localización, de forma que podamos recoger periódicamente la última localización que esté guardada durante la ejecución del hilo.
+
+FileThread se encarga de lanzar los dos hilos de BluetoothThread y CoordenadasThread y, periódicamente, recoge los datos obtenidos por ambos. Estos son guardados mediante una clase llamada FileManager que es la encargada del manejo de archivos. El formato del archivo que se crea consiste en una línea por cada muestreo dividida de la siguiente manera:
+
+(latitud);(longitud);(coordenadaX);(coordenadaY);(coordenadaZ)
+
+ con una última línea indicando el tiempo total de la sesión de la siguiente manera, T(tiempo en milisegundos). Este archivo se guarda en una carpeta en el almacenamiento externo del móvil llamada accelbike; si no existe dicha carpeta, la clase se encarga de crearla.
+
+Para detener la sesión aprovechamos una característica de los hilos en Java que nos permite diferenciarlos de manera única a través de un nombre dado por una cadena de caracteres. De este modo podemos detener un determinado hilo a través de este nombre, por lo que basta con finalizarlos para que se termine la sesión.
+
 \subsection{Generación de mapas tras marcha}
 \label{makereference6.2.4}
+
+Una vez hemos terminado una sesión, o bien hemos cargado una sesión anterior desde la vista de actividades, volvemos a llamar a la clase FileManager, esta vez para cargar el archivo. Se parsea el archivo y se agrupan las localizaciones de dos en dos calculando la distancia entre ellas y creando una polilínea a la que se le da color con los datos del acelerómetro. Cada polilínea se guarda en un array, que junto el tiempo y la distancia se inserta en una clase que actúa como Transfer. Este transfer se devuelve a la vista MapFragment, que se encarga de mostrar los datos de velocidad media, distancia y tiempo y utilizar el array de polilíneas para pintar la ruta en un mapa de Google Maps.
