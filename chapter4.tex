@@ -52,7 +52,7 @@ Nuevamente, la galería de proyectos que oferece el entorno mbed nos permitió d
 
 La placa de desarrollo de Nordic nRF51-DK es compatible con el entorno de desarrollo mbed. Esta herramienta, creada por la empresa ARM, pretende facilitar la programación de una gran cantidad de dispositivos IoT, eliminando la necesidad de utilizar entornos de desarrollo específicos de cada marca.\\
 
-La interfaz del compilador mbed es \textit{online}, permitiendo, tras registrarse, acceder al entorno desde cualquier navegador en cualquier dispositivo con una conexión a Internet. El lenguaje de programación utilizado es C++, y una vez elegido a qué dispositivo va orientado el código, mbed se encarga de toda la configuración a bajo nivel, por lo que, por ejemplo, sacar una señal a través de un pin se puede realizar tan fácimente como declarar una variable \textit{DigitalOut} con su correspondiente número de pin.
+La interfaz del compilador mbed es \textit{online}, permitiendo, tras registrarse, acceder al entorno desde cualquier navegador en cualquier dispositivo con una conexión a Internet sin importar el sistema operativo del ordenador en el que se programe. El lenguaje de programación utilizado es C++, y una vez elegido a qué dispositivo va orientado el código, mbed se encarga de toda la configuración a bajo nivel, por lo que, por ejemplo, sacar una señal a través de un pin se puede realizar tan fácimente como declarar una variable \textit{DigitalOut} con su correspondiente número de pin.
 
 Una vez tenemos un código listo, mbed permite compilarlo y descargar el archivo hexadecimal a nuestro sistema si no ha habido errores de compilación. Para cargarlo en la placa de Nordic, basta con conectar ésta al ordenador por USB, lo que la abrirá en nuestro sistema como una \textit{unidad flash} en la que podremos copiar el archivo compilado. Si ha ocurrido algún problema en la carga, o el programa cargado ha fallado por un error de ejecución, se creará en esa unidad extraíble un archivo de \textit{log} con información sobre el error.
 
@@ -68,14 +68,30 @@ La plataforma mbed está muy orientada a la colaboración entre desarrolladores,
 
 Como puntos negativos se puede resaltar que mbed no cuenta con ninguna herramienta de \textit{debug}, por lo que nos vimos obligados a comprobar el correcto funcionamiento de nuestros programas a través de LEDs o de \textit{printf}s, que nos permitían enviar cadenas de texto a través del puerto USB del dispositivo. También cabe destacar que, aunque el hecho de ser online supone una ventaja a la hora de trabajar desde varios sistemas, resulta un problema si no se dispone de conexión a Internet en un determinado momento.
 
-\subsection{PSoC Creator}
+\subsection{Cypress PSoC Creator}
 \label{explicacionPSoCCreator}
 
-\section{Motivos para quedarse con Nordic}
+En el caso del kit PSoC 4 BLE de Cypress, la plataforma de desarrollo utilizada es propia de la marca Cypress. Esto quiere decir que está orientada exclusivamente para la programación de las placas de esta empresa.
+
+Este entorno de desarrollo consiste en una aplicación de escritorio específica para el sistema operativo Windows, la cual ofrece además una serie de programas de configuración para actualizar el \textit{firmware} de la placa de desarrollo y comprobar el estado del enlace con el ordenador. El lenguaje de programación que se utiliza es C, y utiliza un sistema de \textit{drag and drop} para especificar las funcionalidades que se van a utilizar y definir su interconexión y su configuración. \\
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering 	
+    \includegraphics[width=\textwidth]{figures/psoc_compilador.PNG} % TODO hacer que esto no quede horrible
+   	\caption[Entorno de desarrollo PSoC Creator]{Entorno de desarrollo PSoC Creator}
+   	\label{figuraPSoCCreator}
+\end{figure}
+
+Este sistema permite, por ejemplo, buscar la componente de Bluetooth Low Energy, arrastrarla hasta la vista de diseño, y elegir la opción \textit{Generar Aplicación} para generar el código necesario para interactuar con BLE, creando un archivo de encabezado \textit{BLE.h} y uno de código \textit{BLE.c}.\\
+
+Cypress también pone a disposición del desarrollador tutoriales en vídeo y una serie de ejemplos de código denominada \textit{100 projects in 100 days}~\cite{100Projects}, subida a un repositorio en GitHub, de las que pudimos tomar ejemplo para avanzar con las pruebas, pero nos dimos cuenta de que la comunidad de desarrolladores era más pequeña que la de mbed, probablemente por ser esta plataforma específica para productos de Cypress, mientras que en el ecosistema de mbed se encuentran multitud de fabricantes. 
+
+A diferencia de mbed, PSoC Creator sí ofrece herramientas de \textit{debug}, como puntos de ruptura y visualización del estado de las variables.
+
+\section{Conclusión tras las pruebas}
 \label{makereference4.3}
 
-\section{Algo más de información sobre mbed}
-\label{makereference4.4}
+Tras realizar las pruebas definidas en la Sección~\ref{makereference4.1}, decidimos continuar con la fase final del proyecto utilizando la placa de desarrollo nRF51-DK de Nordic.
 
 \section{Comunicación Bluetooth}
 \label{makereference4.5}
