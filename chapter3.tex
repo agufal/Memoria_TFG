@@ -15,59 +15,71 @@
 \section{Objetivos de la exploración: descubrir variedad de dispositivos y especificaciones}
 \label{makereference3.1}
 
-El objetivo inicial del proyecto a nivel técnico era encontrar una placa de desarrollo que incluyera Bluetooth de bajo consumo y permitiera conectar  un sensor de acelerometría, ya que eran indispensables para la transmisión de datos entre la placa y el dispositivo móvil. 
+El primer hito a nivel técnico era encontrar una placa de desarrollo que incluyera Bluetooth de bajo consumo y permitiera conectar un sensor de acelerometría, ya que eran indispensables para la transmisión de datos entre la placa y el dispositivo móvil. 
 
 Desde el punto de vista comercial, la intención ha sido buscar el componente con mejores prestaciones en calidad y precio con el objetivo de preparar un producto final que pudiera competir con otras opciones del mercado.
 
-Destacamos dos grupos: placas con bluetooth incorporado y componentes sólo con  bluetooth. En las tablas~\ref{tablaSoCBLE} y~\ref{tablaBLE} observamos el análisis de cada grupo.
+Destacamos las placas con Bluetooth incorporado y un microprocesador. En las tabla~\ref{tablaSoCBLE} observamos el análisis de cada elemento que se ha considerado.
 
-\begin{table}
+\begin{table} % TODO marcar en un color las opciones elegidas
 	\begin{center}
-	\begin{small}
-	\begin{tabular}[c]{|c|c|c|c|c|c|c|}
+	\begin{tiny}
+	\begin{tabular}[c]{|c|c|c|c|c|c|}
         \hline
-        \multicolumn{7}{|c|}{CHIPS CON BLUETOOTH} \\
+        \multicolumn{6}{|c|}{CHIPS CON BLUETOOTH} \\
         \hline
-        EMPRESA & MODELO & PRECIO(\euro{}) & PROCESADOR &  FLASH &  RAM & I/O \\
+        EMPRESA & MODELO & PROCESADOR &  FLASH &  RAM & I/O \\
         \hline
-        Nordic & PTR9022 & 5,99 & ARM Cortex-M0 32 bit & 256 KB & 16 KB & SPI, 2-WIRE, UART \\
-        Nordic & PTR9022 & 5,99 & ARM Cortex-M0 32 bit & 256 KB & 16 KB & SPI, 2-WIRE, UART \\
+        Nordic & PTR9022 & ARM Cortex-M0 & 256 KB & 16 KB & SPI, 2-WIRE, UART \\
+		Nordic & nRF51822 & ARM Cortex-M0 & 256/128KB & 32KB/16KB & SPI Master/Slave, 2-wire, UART, 31 GPIO \\
+		Nordic & nRF51422 & ARM Cortex-M0 & 256/128KB & 16KB & SPI Master/Slave, 2-wire, UART, 31 GPIO \\
+		TI & CC2540 / CC2541 & 8051 & 128/256KB & 8KB & 2 USART, ADC, 21 GPIO, SPI \\
+		TI & CC2640F128RGZT & ARM Cortex-M3 & 128KB & 20KB & I2C, I2S, SPI, UART \\
+		Cypress & 4 BLE/PRoC BLE & ARM Cortex-M0 & 128/256KB & 16/32KB & 2 SCBs, configurable como I2C, SPI o UART \\
+		Cypress & PSoC 4XX7-BLE & ARM Cortex-M0 & 128KB & 16KB & I2C, SPI, UART, 36 GPIO \\
     	\hline
 	\end{tabular}
-	\end{small}
-    \caption{Placas SoC que integran radio Bluetooth Low Energy. En verde, las alternativas seleccionadas para la siguiente fase de exploración}
+	\end{tiny}
+    \caption{Placas que integran radio Bluetooth Low Energy. Se destacan las alternativas seleccionadas para la siguiente fase de exploración}
     \label{tablaSoCBLE}
    \end{center}
 \end{table}
 
-\begin{table}
-	\begin{center}
-	\begin{tabular}[c]{|c|c|c|c|c|c|c|}
-        \hline
-        \multicolumn{7}{r}{CHIPS CON BLUETOOTH} \\
-        \hline
-        EMPRESA & MODELO & PRECIO(EUROS) & PROCESADOR & MEMORIA FLASH & MEMORIA RAM & I/O \\
-        \hline
-        Nordic & PTR9022 & 5,99 & ARM Cortex-M0 32 bit & 256 KB & 16 KB & SPI, 2-WIRE, UART \\
-        Nordic & PTR9022 & 5,99 & ARM Cortex-M0 32 bit & 256 KB & 16 KB & SPI, 2-WIRE, UART \\
-    	\hline
-	\end{tabular}
-    \caption{Chips solo BLE}
-    \label{tablaBLE}
-   \end{center}
-\end{table}
+Dada la naturaleza de nuestro proyecto no necesitábamos un gran poder de procesamiento ni una gran capacidad en cuanto a memoria RAM y flash, ya que el código iba a ser muy sencillo. Los dos factores principales a tener en cuenta eran que incorporase la tecnología Bluetooth Low Energy y que permitiese la conexión y el envío de datos con el acelerómetro, ya fuera mediante I2C, SPI, UART...
 
-\section{Plataformas cosideradas}
-\label{makereference3.2}
+Realizando el primer filtro pudimos observar que algunas características eran comunes entre los SoC’s elegidos:
 
-Las empresas consideradas para comprar la placa de desarrollo con microprocesador fueron Nordic, Texas Instruments (TI) y Cypress.
+En materia de procesadores encontramos dos opciones comunes: Cortex-M0 de ARM (Advanced RISC Machines) y 8051 de Intel. Al ver que la mayoría de los chip elegidos montaban el procesador de ARM, claramente observamos que domina el mercado de los sistemas empotrados y las empresas han optado por utilizarlo.
 
-En el grupo analizado para chips con Bluetooth sin procesador contemplamos las empresas Nordic, Texas Instruments (TI), CSR y Dialog. 
+El modelo de negocio utilizado por ARM consiste en la venta de licencias de sus núcleos~\cite{ARMIPCore}, lo que permite a otros fabricantes diseñar su propio System On Chip (SoC) integrando tecnología ARM.
 
-Al considerar que era más interesante tener una placa con procesador, sensores y periféricos descartamos los chips individuales y optamos por una opción más completa.
+ARM Cortex-M0 nos parecía una opción más interesante, ya que este procesador cuenta con la tecnología RISC, acrónimo de Reduced Instruction Set Computing, computación de instrucciones reducidas, cuenta con una arquitectura de 32 bits frente a los 16 de Intel 8051 y soporta la arquitectura Thumb, que mejora la densidad del código para ocupar menos espacio tanto en memoria RAM como en flash.
+
+La cantidad de memoria RAM disponible más común para este tipo de dispositivos es de 8, 16 o 32 kilobytes. La segunda opción nos pareció más que suficiente para albergar un programa sencillo como el nuestro y las variables necesarias.
+
+En cuanto a capacidad de almacenamiento, todas las placas cuentan con memoria flash, que pueden variar entre 128 y 256 Kilobytes. De nuevo, la complejidad de nuestro programa no iba a generar un fichero compilado de gran tamaño, y no necesitábamos guardar nada más, por lo que 128 KB nos parecieron adecuados.
+
+En cuanto a los periféricos de entrada/salida, la mayoría de las placas de desarrollo incluyen los protocolos SPI e I2C.
+
+El protocolo SPI consiste en el envío de la señal de reloj del maestro y en cada impulso de reloj se envía un bit al esclavo y recibe un bit de éste. Los nombres de las señales son SCK para el reloj, MOSI para el Maestro Out Esclavo In, y MISO para Maestro In Esclavo Out.
+
+El protocolo I2C, usa dos cables, uno para el reloj (SCL) y otro para el dato (SDA). El maestro y esclavo envían datos por el mismo cable, el cual es controlado por el maestro, que crea la señal de reloj. Este protocolo utiliza direccionamiento, es decir, el primer byte enviado por el maestro se forma de 7 bits para la dirección (así que permite comunicarse con hasta 127 dispositivos) y un bit de lectura/escritura, indicando si el próximo byte vendrá desde el maestro o el esclavo. Esta tecnología se ampliará en el Capítulo~\ref{makereference4.8}.
 
 \section{Análisis de los candidatos}
 \label{makereference3.3}
+
+Una vez recopilados los modelos de que observamos en las tablas, hemos destacado 2 placas de prototipado que cumplen con los requisitos del proyecto. Este tipo de placas ofrecen más características de las que necesitamos para el proyecto, pero suponen un primer paso para poder programar y realizar pruebas antes de pasar a chips más simples y con un menor coste. 
+
+Por un lado escogimos la placa de desarrollo de Cypress con el kit PSoC BLE y modelo de la placa con Bluetooth \textbf{CY8CKIT-042-BLE} certificado para sistemas de bajo consumo. Es un kit provisto de un chip que ofrece un procesador ARM Cortex-M0 y capacidad y conectividad suficiente como para utilizarlo de base para el proyecto.
+
+El entorno de desarrollo para las plataformas de Cypress es un software de escritorio llamado \textit{PSoC Creator}, en el cual podemos diseñar sistemas a través de un panel gráfico. Nos ofrece multitud de librerías disponibles para la placa utilizada y es posible codificar, compilar, y depurar código.\\
+
+Consideramos también la placa de Nordic modelo \textbf{nRF51-DK} por ser un kit de desarrollo que ofrece el mismo procesador que Cypress, conectividad tanto I2C como SPI para realizar las pruebas con el sensor. 
+Este modelo ofrece compatibilidad con la plataforma de desarrollo \textit{mbed} de ARM, es una opción que nos resultó interesante a la hora escogerla. Dispone de una gran comunidad y soporte lo cual es de agradecer.\\
+
+En la Sección~\ref{makereference3.4} hablaremos más sobre los aspectos específicos de ambos entornos de desarrollo.
+
+Al considerar que era más interesante tener una placa con procesador, sensores y periféricos descartamos los chips individuales y optamos por una opción más completa.
 
 \subsection{Aspectos técnicos}
 \label{makereference3.3.1}
@@ -97,17 +109,6 @@ El protocolo \textbf{SPI} consiste en el envío de la señal de reloj del maestr
 El protocolo \textbf{I2C} es síncrono, usa dos cables, uno para el reloj (SCL) y otro para el dato (SDA). El maestro y esclavo envían datos por el mismo cable, el cual es controlado por el maestro, que crea la señal de reloj. Este protocolo utiliza direccionamiento, es decir, el primer byte enviado por el maestro se forma de 7 bits para la dirección (así que permite comunicarse con hasta 127 dispositivos) y un bit de lectura/escritura, indicando si el próximo byte vendrá desde el maestro o el esclavo.
 
 Tras cada byte recibido se envía una confirmación con el noveno pulso de reloj. Si el maestro quiere recibir datos sólo genera pulsos de reloj. El esclavo tiene que cuidar que el próximo bit esté listo cuando la señal de reloj es dada. Dos o más señales a través del mismo cable pueden causar conflicto, y habría problemas si un dispositivo envía un 1 lógico al mismo tiempo que otro envía un 0. Por tanto el bus es "cableado" con resistencias de pull-up para poner el bus a nivel alto, y son los dispositivos los que fuerzan niveles bajos para enviar un ‘0’ lógico. Si quieren enviar un nivel alto simplemente lo comunican al bus.
-
-\subsection{Aspectos calidad-precio}
-\label{makereference3.3.2}
-
-Destacar primeramente el proveedor, debe ser una empresa consolidada y especializada del sector de componentes electrónicos, que ofrezcan productos competentes y de calidad y que la respalde un buen soporte y una gran comunidad para posibles dudas técnicas.
-
-El precio es fundamental que no se exceda, ya que el producto final podría encarecerse y no ser competente ni atractivo de cara al público objetivo.
-
-En nuestro caso valoramos como opción inicial realizar las pruebas del proyecto sobre una placa desarrollo que incluye un kit completo con múltiples componentes, rondando los 50 euros. 
-
-Por lo tanto es un paso intermedio entre las pruebas iniciales con la placa y lo que sería el procesador ya preparado y cableado antes de llevarlo incorporado como producto final.
 
 \section{Plataformas escogidas}
 \label{makereference3.4}
