@@ -48,7 +48,7 @@ Realizando el primer filtro pudimos observar que algunas características eran c
 
 En materia de procesadores encontramos dos opciones comunes: \textbf{Cortex-M0} de ARM (Advanced RISC Machines) y \textbf{8051} de Intel. Al ver que la mayoría de los chip elegidos montaban el procesador de ARM, claramente observamos que domina el mercado de los sistemas empotrados y las empresas han optado por utilizarlo. Esto se debe a que el modelo de negocio utilizado por ARM consiste en la venta de licencias de sus núcleos~\cite{ARMIPCore}, lo que permite a otros fabricantes diseñar su propio System On Chip (SoC) integrando tecnología ARM.
 
-ARM Cortex-M0 nos parecía una opción más interesante, ya que este procesador cuenta con la tecnología RISC, acrónimo de Reduced Instruction Set Computing, computación de instrucciones reducidas, cuenta con una arquitectura de 32 bits frente a los 16 de Intel 8051 y soporta la arquitectura Thumb, que mejora la densidad del código para ocupar menos espacio tanto en memoria RAM como en flash.
+ARM Cortex-M0 nos parecía una opción más interesante, ya que este procesador tipo RISC, cuenta tanto con una arquitectura de 32 bits (frente a los 16 de Intel 8051) como con la arquitectura Thumb, que mejora la densidad del código para ocupar menos espacio tanto en memoria RAM como en flash.
 
 La cantidad de memoria RAM disponible más común para este tipo de dispositivos es de 8, 16 o 32 kilobytes. La segunda opción nos pareció más que suficiente para albergar un programa sencillo como el nuestro y las variables necesarias.
 
@@ -60,7 +60,7 @@ El protocolo SPI consiste en el envío de la señal de reloj del maestro y en ca
 
 El protocolo I2C, usa dos cables, uno para el reloj (SCL) y otro para el dato (SDA). El maestro y esclavo envían datos por el mismo cable, el cual es controlado por el maestro, que crea la señal de reloj. Este protocolo utiliza direccionamiento, es decir, el primer byte enviado por el maestro se forma de 7 bits para la dirección (así que permite comunicarse con hasta 127 dispositivos) y un bit de lectura/escritura, indicando si el próximo byte vendrá desde el maestro o el esclavo. Esta tecnología se ampliará en el Capítulo~\ref{makereference4.8}.
 
-\section{Análisis de los candidatos}
+\section{Selección de plataformas de desarrollo}
 \label{makereference3.3}
 
 Una vez recopilados los modelos de que observamos en la Tabla~\ref{tablaSoCBLE}, hemos destacado 2 placas de prototipado que cumplen con los requisitos del proyecto. Este tipo de placas ofrecen más características de las que necesitamos para el proyecto, pero suponen un primer paso para poder programar y realizar pruebas antes de pasar a chips más simples y con un menor coste. 
@@ -76,7 +76,7 @@ En la Sección~\ref{makereference3.4} hablaremos más sobre los aspectos especí
 
 Al considerar que era más interesante tener una placa con procesador, sensores y periféricos descartamos los chips individuales y optamos por una opción más completa.
 
-\section{Plataformas escogidas}
+\subsection{Análisis de las plataformas escogidas}
 \label{makereference3.4}
 
 Rápidamente observamos dos grandes empresas especializadas en el sector como son Nordic y Cypress. Tienen gran variedad de microprocesadores y placas de desarrollo que cumplen con nuestras expectativas.

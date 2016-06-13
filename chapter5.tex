@@ -6,22 +6,20 @@
 \section{Comunicación con el acelerómetro por I2C}
 \label{makereference5.1}
 
-GPIO (General Purpose Input/Output) son unos pines genéricos que utiliza el modelo nRF51-DK, pueden programarse en tiempo de ejecución y se usan para comunicarse con dispositivos externos, en este caso la placa  XTRINSIC-SENSE-BOARD de Element14, que incorpora el acelerómetro de 3 ejes MMA8491Q.
+GPIO (General Purpose Input/Output) son unos pines genéricos que utiliza el modelo nRF51-DK, pueden programarse en tiempo de ejecución y se usan para comunicarse con dispositivos externos, en este caso la placa  \emph{XTRINSIC-SENSE-BOARD} de Element14, que incorpora el acelerómetro de 3 ejes MMA8491Q.
 
 Estos pines no tienen ningún propósito predefinido, y no se utilizan de forma predeterminada.
 
-I2C es un bus de datos con conexión serie síncrona unidireccional (half-duplex) que se puede dar de 2 tipos:
-\begin{itemize}
-	\item Master/Esclavo
-	\item Esclavo/Master
-\end{itemize}
+I2C es un bus de datos con conexión serie síncrona unidireccional (half-duplex) en el que uno de los extremos actúa en el papel de maestro y el otro extremo hará el papel de esclavo:
 
 \textbf{Máster.} Inicia la transferencia generando las condiciones de inicio y parada de la señal de reloj. Transmite la dirección del esclavo y determina el sentido de la transferencia (lectura –
 escritura). La comunicación siempre la inicia el Master y el esclavo espera órdenes.\\
 
 \textbf{Esclavo.} Este responde sólo cuando se dirigen a él. La temporización se controla mediante la línea de reloj del bus.\\
 
-La transmisión de información se hace a través de 2 cables, uno para transmitir los datos (SDA) y otro para transmitir la señad del reloj (SCL). Otro cable para activar el acelerómetro (ENABLE) y otros 2 cables de toma de tierra (GND) y corriente (VDD) con este cablado tenemos conectado el sensor con la placa de desarrollo.
+La transmisión de información se hace a través de 2 cables, uno para transmitir los datos (SDA) y otro para transmitir la señad del reloj (SCL). 
+
+Para conectar el acelerómetro, además de usar los dos pines del bus I2C, es necesario activar la señal de \emph{enable} y alimentar el dispositivo (pine \emph{GND} y \emph{VCC}). La figura \ref{figuraXtrinsic} muestra los pines que ofrece la placa  \emph{XTRINSIC-SENSE-BOARD} resaltando los que debemos conectar con la placa de desarrollo.
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
@@ -33,7 +31,7 @@ La transmisión de información se hace a través de 2 cables, uno para transmit
 \subsection{Lectura de datos}
 \label{makereference5.1.1}
 
-El acelerómetro MMA8491Q tiene 7 registros donde se guardan los datos de acelerometría que han sido recogidos en la lectura. El primer registro es un registro de estado en el que se indica si alguno de los ejes ha cambiado desde la última muestra, los 6 registros siguientes dividen cada eje en los 8 bits más significativos y los 6 menos significativos, haciendo un total de 14 bits por eje. En la tabla que se muestra en la Figura~\ref{figuraRegistrosAcc} se puede observar la información de los 7 registros.
+El acelerómetro MMA8491Q tiene 7 registros donde se guardan los datos de acelerometría que han sido recogidos en la lectura. El primer registro es un registro de estado en el que se indica si alguno de los ejes ha cambiado desde la última muestra. Los 6 registros siguientes dividen cada eje en los 8 bits más significativos y los 6 menos significativos, haciendo un total de 14 bits por eje. En la tabla que se muestra en la Figura~\ref{figuraRegistrosAcc} se puede observar la información de los 7 registros.
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
@@ -61,7 +59,7 @@ El acelerómetro establece una serie de pasos para poder establecer la comunicac
 	\item Por último, se transmite una trama ACK y una señal de stop para finalizar.
 \end{itemize}
 
-Una vez recibidos estos datos en la placa de Nordic, se juntan y se parsean siguiendo la siguiente fórmula:
+Una vez recibidos estos datos en la placa de Nordic, se juntan y se parsean  mediante la siguiente expresión :
 
 \begin{lstlisting}[frame=single]
 
@@ -81,7 +79,7 @@ Donde MSB es el byte con los bits más signigicativos, LSB es el byte con los bi
 
 En un entorno ideal, los datos que recoja el acelerómetro en un período en el que se encuentre estático deberían ser únicamente el valor de la gravedad (1g) repartido entre los 3 ejes, ya que es una aceleración constante que experimenta cualquier objeto en este planeta.
 
-Lejos de ese caso, la información que recibimos varía ligeramente, normalmente en una escala de unos pocos mg. Para eliminar este ruido realizamos un filtrado consistente en recoger una muestra de 10 valores e insertarlos en un Búfer circular para poder filtrarlos a través de una media ponderada. El dar pesos a los datos permite que los últimos valores no se pierdan y que la media se actualice lo suficientemente rápido en caso de cambios bruscos.
+Lejos de ese caso, la información que recibimos varía ligeramente, normalmente en una escala de unos pocos mg. Para eliminar este ruido realizamos un filtrado consistente en recoger una muestra de 10 valores e insertarlos en un \emph{buffer} circular para poder filtrarlos a través de una media ponderada. Dar pesos a los datos permite que los últimos valores no se pierdan y que la media se actualice lo suficientemente rápido en caso de cambios bruscos.
 
 \section{Comunicación Bluetooth}
 \label{makereference5.2}

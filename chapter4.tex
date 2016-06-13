@@ -1,7 +1,7 @@
 
 \cleardoublepage
 
-\chapter{Pruebas iniciales}
+\chapter{Instalación de entornos de desarrollo y primeros desarrollos HW}
 \label{makereference4}
 
 Antes de comenzar programando la funcionalidad principal de este proyecto, tuvimos que aprender a utilizar herramientas y conceptos como los entornos de desarrollo de las placas de Nordic y de Cypress o los protocolos SPI e I2C y el propio BLE, con los que no habíamos trabajado nunca, por lo que primero realizamos una serie de pruebas para familiarizarnos y así decidir cuál de ellas elegiríamos finalmente para el proyecto.
@@ -30,7 +30,7 @@ Para realizar la transferencia de datos por SPI colocamos como master la placa d
 
 Para comprobar en un principio si se recibían correctamente los datos, en la placa nRF51-DK de Nordic utilizamos sus 4 LED’S verdes, apagándolos o encenciéndolos según el valor ya digitalizado que recibe. De igual forma al probarlo con PSoC BLE de Cypress interactuamos con su LED RGB, utilizando los colores verde, azul y rojo para representar los diferentes datos que recibía del circuito.
 
-Estas primeras pruebas nos sirvieron para comprobar la correcta recepción de datos, pero el objetivo era llevarlos a una aplicación desarrollada en Android. Por tanto nuestra primera toma de contacto con el desarrollo de la aplicación Android (Figura~\ref{figuraAPPPrueba}) que hacía uso del módulo BLE fue en este momento, centrado más en la funcionalidad más que en el diseño. Esta aplicación funcional nos permitió probar conceptos como el de activar desde dentro de una app el Bluetooth del móvil, realizar un escaneo para detectar los dispositivos con Bluetooth cercanos, conectarse a éstos y enviar datos. Para verificar que funcionaba correctamente, escribimos mensajes de log  que se pueden visualizar en el entorno de desarrollo Android Studio.
+Estas primeras pruebas nos sirvieron para comprobar la correcta recepción de datos, pero el objetivo era llevarlos a una aplicación desarrollada en Android. Por tanto nuestra primera toma de contacto con el desarrollo de la aplicación Android (Figura~\ref{figuraAPPPrueba}) que haría uso del módulo BLE fue en este momento, centrándonos más en la funcionalidad  que en el diseño. Esta aplicación funcional nos permitió probar conceptos como el de activar desde dentro de una app el Bluetooth del móvil, realizar un escaneo para detectar los dispositivos con Bluetooth cercanos, conectarse a éstos y enviar datos. Para verificar que funcionaba correctamente, escribimos mensajes de log  que se pueden visualizar en el entorno de desarrollo Android Studio.
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering 	
@@ -84,9 +84,10 @@ Este entorno de desarrollo consiste en una aplicación de escritorio específica
 
 Este sistema permite, por ejemplo, buscar la componente de Bluetooth Low Energy, arrastrarla hasta la vista de diseño, y elegir la opción \textit{Generar Aplicación} para generar el código necesario para interactuar con BLE, creando un archivo de encabezado \textit{BLE.h} y uno de código \textit{BLE.c}.\\
 
-Cypress también pone a disposición del desarrollador tutoriales en vídeo y una serie de ejemplos de código denominada \textit{100 projects in 100 days}~\cite{100Projects}, subida a un repositorio en GitHub, de las que pudimos tomar ejemplo para avanzar con las pruebas, pero nos dimos cuenta de que la comunidad de desarrolladores era más pequeña que la de mbed, probablemente por ser esta plataforma específica para productos de Cypress, mientras que en el ecosistema de mbed se encuentran multitud de fabricantes. 
+Cypress también pone a disposición del desarrollador tutoriales en vídeo y una serie de ejemplos de código denominada \textit{100 projects in 100 days}~\cite{100Projects}, subida a un repositorio en GitHub, de las que pudimos tomar ejemplo para avanzar con las pruebas.
+Sin embargo, la comunidad de desarrolladores era más pequeña que la de \emph{mbed}, probablemente por ser esta plataforma específica para productos de Cypress, mientras que en el ecosistema de \emph{mbed} se encuentran multitud de fabricantes.
 
-A diferencia de mbed, PSoC Creator sí ofrece herramientas de \textit{debug}, como puntos de ruptura y visualización del estado de las variables.
+A diferencia de \emph{mbed}, PSoC Creator sí ofrece herramientas de \textit{debug}, con puntos de ruptura y visualización del estado de las variables.
 
 \section{Conclusión tras las pruebas}
 \label{makereference4.3}
