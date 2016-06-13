@@ -3,12 +3,14 @@
 \chapter{Desarrollo Hardware}
 \label{makereference5}
 
+Una vez terminado el período de pruebas, ya con el kit de desarrollo nRF51-DK de Nordic como opción principal y con la placa XTRINSIC-SENSE-BOARD de Element 14, que incorpora el acelerómetro MMA84910 de 3 ejes, pudimos comenzar a desarrollar la parte hardware de este proyecto.
+
+El desarrollo se centró en dos elementos: la \textbf{comunicación por I2C} entre la placa de desarrollo y el acelerómetro y el \textbf{envío de datos mediante Bluetooth Low Energy} desde la placa hacia un dispositivo móvil. A continuación se describirán los pasos realizados.
+
 \section{Comunicación con el acelerómetro por I2C}
 \label{makereference5.1}
 
-GPIO (General Purpose Input/Output) son unos pines genéricos que utiliza el modelo nRF51-DK, pueden programarse en tiempo de ejecución y se usan para comunicarse con dispositivos externos, en este caso la placa  XTRINSIC-SENSE-BOARD de Element14, que incorpora el acelerómetro de 3 ejes MMA8491Q.
-
-Estos pines no tienen ningún propósito predefinido, y no se utilizan de forma predeterminada.
+El modelo nRF51-DK utiliza GPIO (General Purpose Input/Output), que son unos pines genéricos que pueden programarse en tiempo de ejecución y se usan para comunicarse con dispositivos externos, en este caso la placa XTRINSIC-SENSE-BOARD. Estos pines no tienen ningún propósito predefinido, y no se utilizan de forma predeterminada. % Pregunta: I2C se programa en un GPIO?
 
 I2C es un bus de datos con conexión serie síncrona unidireccional (half-duplex) que se puede dar de 2 tipos:
 \begin{itemize}
