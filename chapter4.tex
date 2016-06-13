@@ -92,4 +92,10 @@ A diferencia de \emph{mbed}, PSoC Creator sí ofrece herramientas de \textit{deb
 \section{Conclusión tras las pruebas}
 \label{makereference4.3}
 
-Tras realizar las pruebas definidas en la Sección~\ref{makereference4.1}, decidimos continuar con la fase final del proyecto utilizando la placa de desarrollo nRF51-DK de Nordic.
+Tras realizar las pruebas definidas en la Sección~\ref{makereference4.1}, aprendimos a desarrollar rápidamente códigos para lograr la funcionalidad deseada. 
+
+Los ejemplos de uso de Bluetooth Low Energy nos ayudaron a comprender los pasos que se debían dar para establecer correctamente una conexión, aunque tuvimos que informarnos más para comprender qué era exactamente lo que sucedía en cada paso.
+
+Una vez entendimos el procedimiento para conectar por SPI el circuito mencionado anteriormente y la lógica que había que seguir para programar la interacción tanto con la placa de Cypress como la de Nordic, realizar la transición a I2C para conectar el acelerómetro fue un paso sencillo, pues las API de ambas placas gestiona de manera similar los dos protocolos.
+
+Como ya mencionamos en el Capítulo~\ref{makereference3}, la decisión de continuar la fase final del proyecto con una placa u otra fue difícil, pues ambas tienen características similares y sus entornos de desarrollo tienen sus pros y sus contras, pero finalmente escogimos la placa de desarrollo nRF51-DK de Nordic. %TODO Por que???
