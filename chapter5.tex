@@ -10,16 +10,15 @@ El desarrollo se centró en dos elementos: la \textbf{comunicación por I2C} ent
 \section{Comunicación con el acelerómetro por I2C}
 \label{makereference5.1}
 
-El modelo nRF51-DK utiliza GPIO (General Purpose Input/Output), que son unos pines genéricos que pueden programarse en tiempo de ejecución y se usan para comunicarse con dispositivos externos, en este caso la placa XTRINSIC-SENSE-BOARD. Estos pines no tienen ningún propósito predefinido, y no se utilizan de forma predeterminada. % Pregunta: I2C se programa en un GPIO?
+El modelo nRF51-DK utiliza GPIO (General Purpose Input/Output), que son unos pines genéricos que pueden programarse como entrada o salida. Dos de estos pines se pueden configurar como un bus I2C, que se usa para comunicarse con una gran variedad de dispositivos externos, en este caso la placa XTRINSIC-SENSE-BOARD. 
 
 I2C es un bus de datos con conexión serie síncrona unidireccional (half-duplex) que se puede dar de 2 tipos:
 \begin{itemize}
-	\item Master/Esclavo
-	\item Esclavo/Master
+	\item Maestro/Esclavo
+	\item Esclavo/Maestro
 \end{itemize}
 
-\textbf{Máster.} Inicia la transferencia generando las condiciones de inicio y parada de la señal de reloj. Transmite la dirección del esclavo y determina el sentido de la transferencia (lectura –
-escritura). La comunicación siempre la inicia el Master y el esclavo espera órdenes.\\
+\textbf{Maestro.} Inicia la transferencia generando las condiciones de inicio y parada de la señal de reloj. Transmite la dirección del esclavo y determina el sentido de la transferencia (lectura-escritura). La comunicación siempre la inicia el Master y el esclavo espera órdenes.\\
 
 \textbf{Esclavo.} Este responde sólo cuando se dirigen a él. La temporización se controla mediante la línea de reloj del bus.\\
 
@@ -27,7 +26,7 @@ La transmisión de información se hace a través de 2 cables, uno para transmit
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
-    \includegraphics[scale=0.6]{figures/estructura_xtrinsic.jpg} % TODO hacer que esto no quede horrible
+    \includegraphics[scale=0.6]{figures/estructura_xtrinsic.jpg}
     \caption[Cableado del acelerómetro por I2C]{Cableado del acelerómetro por I2C}
    	\label{figuraXtrinsic}
 \end{figure}
@@ -76,7 +75,15 @@ Una vez recibidos estos datos en la placa de Nordic, se juntan y se parsean sigu
 
 \end{lstlisting}
 
-Donde MSB es el byte con los bits más signigicativos, LSB es el byte con los bits menos significativos, y WORD y NATURAL son variables enteras. Durante estos pasos se amplían los 14 bits a 16 para poder dividirlos en 2 bytes y así poder enviarlos mediante Bluetooth.
+Donde MSB es el byte con los bits más signigicativos, LSB es el byte con los bits menos significativos, y WORD y NATURAL son variables enteras. El resultado, de 14 bits, se guarda en una variable 16, que luego se dividirá en 2 bytes separados para poder enviarlos mediante Bluetooth.
+
+Paso por paso, lo que hacemos es:
+
+\begin{itemize}
+	\item Concatenamos los dos grupos de bits leidos por separado del bus.
+	\item Cambiamos el signo si es negativo, almacenandolo como un numero negativo de 16bits.
+	\item Cambiamos la escala de -8192 / 8191 a -8000 / 8000
+\end{itemize}
 
 \subsection{Filtrado}
 \label{makereference5.4.2}
@@ -113,11 +120,11 @@ La placa nRF51-DK actúa como Periférico, pues manda paquetes de anuncio y acep
 Empezamos configurando el Perfil de Acceso Genérico (GAP) para establecer la información que incluyen los paquetes de anuncio:
 
 \begin{itemize}
-	\item El dispositivo es sólo BLE y no utiliza Bluetooth clásico
-	\item Se le permite a otros dispositivos su descubrimiento
-	\item La lista de servicios que contiene, en la que aparecerá el servicio mencionado anteriormente
-	\item El nombre del dispositivo, dado por una cadena de caracteres
-	\item El método de conexión
+	\item El dispositivo es sólo BLE y no utiliza Bluetooth clásico.
+	\item Se le permite a otros dispositivos su descubrimiento.
+	\item La lista de servicios que contiene, en la que aparecerá el servicio mencionado anteriormente.
+	\item El nombre del dispositivo, dado por una cadena de caracteres.
+	\item El método de conexión.
 \end{itemize}
 
 Toda esta información estará disponible para cualquier dispositivo que se encuentre escaneando.\\

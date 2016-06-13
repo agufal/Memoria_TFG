@@ -21,8 +21,15 @@ Una vez creado el circuito comprobamos con un voltímetro que dejar pasar menos 
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
-    \includegraphics{figures/mcp3008_esquema.PNG} % TODO hacer que esto no quede horrible
-    \caption[TODO]{TODO}
+    \includegraphics[scale=0.5]{figures/mcp3008_esquema.PNG} % TODO hacer que esto no quede horrible
+    \caption[Diagrama de pines para el conversor A/D MCP3008]{Diagrama de pines para el conversor A/D MCP3008}
+   	\label{figuraMCPEsquema}
+\end{figure}
+
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[scale=0.5]{figures/circuito_fotoresistencia.jpg} % TODO hacer que esto no quede horrible
+    \caption[Circuito realizado para la prueba MCP3008]{Circuito realizado para la prueba MCP3008, con una fotoresistencia.}
    	\label{figuraMCPEsquema}
 \end{figure}
 
@@ -50,8 +57,6 @@ Nuevamente, la galería de proyectos que oferece el entorno mbed nos permitió d
 \subsection{ARM mbed}
 \label{explicacionARMmbed}
 
-La placa de desarrollo de Nordic nRF51-DK es compatible con el entorno de desarrollo mbed. Esta herramienta, creada por la empresa ARM, pretende facilitar la programación de una gran cantidad de dispositivos IoT, eliminando la necesidad de utilizar entornos de desarrollo específicos de cada marca.\\
-
 La interfaz del compilador mbed es \textit{online}, permitiendo, tras registrarse, acceder al entorno desde cualquier navegador en cualquier dispositivo con una conexión a Internet sin importar el sistema operativo del ordenador en el que se programe. El lenguaje de programación utilizado es C++, y una vez elegido a qué dispositivo va orientado el código, mbed se encarga de toda la configuración a bajo nivel, por lo que, por ejemplo, sacar una señal a través de un pin se puede realizar tan fácimente como declarar una variable \textit{DigitalOut} con su correspondiente número de pin.
 
 Una vez tenemos un código listo, mbed permite compilarlo y descargar el archivo hexadecimal a nuestro sistema si no ha habido errores de compilación. Para cargarlo en la placa de Nordic, basta con conectar ésta al ordenador por USB, lo que la abrirá en nuestro sistema como una \textit{unidad flash} en la que podremos copiar el archivo compilado. Si ha ocurrido algún problema en la carga, o el programa cargado ha fallado por un error de ejecución, se creará en esa unidad extraíble un archivo de \textit{log} con información sobre el error.
@@ -77,7 +82,7 @@ Este entorno de desarrollo consiste en una aplicación de escritorio específica
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering 	
-    \includegraphics[width=\textwidth]{figures/psoc_compilador.PNG} % TODO hacer que esto no quede horrible
+    \includegraphics[width=\textwidth]{figures/psoc_compilador.PNG}
    	\caption[Entorno de desarrollo PSoC Creator]{Entorno de desarrollo PSoC Creator}
    	\label{figuraPSoCCreator}
 \end{figure}
@@ -98,4 +103,4 @@ Los ejemplos de uso de Bluetooth Low Energy nos ayudaron a comprender los pasos 
 
 Una vez entendimos el procedimiento para conectar por SPI el circuito mencionado anteriormente y la lógica que había que seguir para programar la interacción tanto con la placa de Cypress como la de Nordic, realizar la transición a I2C para conectar el acelerómetro fue un paso sencillo, pues las API de ambas placas gestiona de manera similar los dos protocolos.
 
-Como ya mencionamos en el Capítulo~\ref{makereference3}, la decisión de continuar la fase final del proyecto con una placa u otra fue difícil, pues ambas tienen características similares y sus entornos de desarrollo tienen sus pros y sus contras, pero finalmente escogimos la placa de desarrollo nRF51-DK de Nordic. %TODO Por que???
+Como ya mencionamos en el Capítulo~\ref{makereference3}, la decisión de continuar la fase final del proyecto con una placa u otra fue difícil, pues ambas tienen características similares y sus entornos de desarrollo tienen sus pros y sus contras, pero finalmente escogimos la placa de desarrollo nRF51-DK de Nordic por la facilidad de encontrar información y ayuda en los foros de la comunidad. Los ejemplos ofrecidos en el repositorio propio de \emph{mbed} fueron de gran ayuda para consolidar el aprendizaje con dicha placa y la propia herramienta nos pareció una gran apuesta para dispositivos IoT. Cabe destacar que la opción de Cypress podría haber sido viable perfectamente.

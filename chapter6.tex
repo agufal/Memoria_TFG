@@ -81,27 +81,58 @@ A continuación describiremos la funcionalidad de los casos de uso más importan
 \subsection{Conexión al dispositivo BLE}
 \label{makereference6.2.1}
 
-Para realizar la comunicación entre la placa y el móvil utilizamos una clase (BLEGatt) con el patrón Singleton. Para configurar esta clase de modo que se realice la conexión tenemos un clase auxiliar llamada BluetoothManager, que utiliza un BLEScanner para escanear los dispositivos cercanos. A esta clase se accede desde la clase ConfigFragment llamando al controlador, y éste a su vez crea un comando, ComandoEscanear, que es el que utiliza a BluetoothManager para realizar las conexiones. 
+\begin{figure}[h]%t=top, b=bottom, h=here
+  \centering
+    \includegraphics[scale=0.5]{figures/diagrama_clases_ble.png} % TODO hacer que esto no quede horrible
+    \caption[Diagrama de las clases que intervienen en una conexión BLE]{Diagrama de las clases que intervienen en una conexión BLE}
+    \label{figuraDiagramaClasesBLE}
+\end{figure}
+
+Para realizar la comunicación entre la placa y el móvil, primero debemos escanear los dispositivos BLE cercanos. Para ello utilizamos una clase de la API de Android llamada \textit{BluetoothLeScanner}, que busca exclusivamente dispositivos Bluetooth Low Energy y nos devuelve la información recogida en los paquetes de anuncio de los dispositivos en forma de \textit{BluetoothDevice}.
+
+Una vez obtenidos, los mostramos en forma de lista en la que aparece el nombre de cada dispositivo, como se muestra en la Figura~\ref{figuraAPPConfigAyuda}, para que el usuario elija a cuál se quiere conectar. 
+
+Hemos creado una clase \textit{BLEGatt}, que es la que se encarga de mantener la información del enlace. Para establecer la conexión, se hace uso de esta clase, que configura el GATT para empezar a explorar los servicios, como se explicará más adelante.
+
+%Para realizar la comunicación entre la placa y el móvil utilizamos una clase (BLEGatt) con el patrón Singleton. Para configurar esta clase de modo que se realice la conexión tenemos un clase auxiliar llamada BluetoothManager, que utiliza un BLEScanner para escanear los dispositivos cercanos. A esta clase se accede desde la clase ConfigFragment llamando al controlador, y éste a su vez crea un comando, ComandoEscanear, que es el que utiliza a BluetoothManager para realizar las conexiones. 
 
 \subsection{GPS}
 \label{makereference6.2.2}
 
-Android por motivos de seguridad no permite activar el gps del móvil desde una app, por lo que lo único que hacemos es avisar al sistema operativo para que abra la ventana de configuración de la ubicación. 
+Android por motivos de seguridad no permite activar el GPS del móvil desde una app, por lo que lo único que hacemos es avisar al sistema operativo para que abra la ventana de configuración de la ubicación.
+Una vez activado, la API de Android nos ofrece una clase llamada \textit{LocationManager}, que nos permite establecer un período de actualización, de modo que guarda de manera regular la última localización conocida, a la que podemos acceder.
 
 \subsection{Funcionamiento durante la marcha}
 \label{makereference6.2.3}
 
-Para llevar a cabo una sesión tenemos tres clases que heredan de Thread: BluetoothThread, CoordenadasThread y FileThread. De ese modo, la lectura de los datos del acelerómetro, los datos de la ubicación y la escritura en el archivo se hacen de manera independiente. 
+\begin{figure}[h]%t=top, b=bottom, h=here
+  \centering
+    \includegraphics[scale=0.5]{figures/diagrama_clases_marcha.png} % TODO hacer que esto no quede horrible
+    \caption[Diagrama de las clases que intervienen en una sesión]{Diagrama de las clases que intervienen en una sesión}
+    \label{figuraDiagramaClasesMarcha}
+\end{figure}
 
-BluetoothThread utiliza la clase BLEGatt explicada anteriormente para leer las características recibidas, debido a que la lectura de los datos en BLEGatt se realiza con un callback no podemos recoger la información de forma inmediata, así que registramos al BluetoothThread como observador de BLEGatt de forma que éste avise a BluetoothThread.
+Para llevar a cabo una sesión tenemos tres clases que heredan de Thread: BluetoothThread, CoordenadasThread y FileThread. De ese modo, la lectura de los datos del acelerómetro, los datos de la ubicación y la escritura en el archivo se hacen de manera independiente.\\
 
-CoordenadasThread aprovecha una clase de Android llamada LocationManager que permite establecer una frecuencia de actualización de la localización, de forma que podamos recoger periódicamente la última localización que esté guardada durante la ejecución del hilo.
+\textbf{BluetoothThread} utiliza la clase BLEGatt explicada anteriormente para leer las características recibidas. Como se menciona en la Sección~\ref{makereference5.2}, hemos configurado la placa nRF51-DK para que tenga un servicio con UUID 0xA000, que contiene la característica con UUID 0xA001, que es la que nos interesa para obtener la información del acelerómetro. Para descubrir este servicio, se puede realizar lo que se llama \textit{escaneo de servicios}, que devuelve una lista de los servicios del dispositivo, pero como ya conocemos de antemano el UUID, podemos acceder a él directamente.
 
-FileThread se encarga de lanzar los dos hilos de BluetoothThread y CoordenadasThread y, periódicamente, recoge los datos obtenidos por ambos. Estos son guardados mediante una clase llamada FileManager que es la encargada del manejo de archivos. El formato del archivo que se crea consiste en una línea por cada muestreo dividida de la siguiente manera:
+Para recoger la información del acelerómetro, se accede la característica mencionada a través de su identificador, lo que devuelve una clase de Android llamada \textit{BluetoothGattCharacteristic}, que podemos usar para leer el valor del GATT.\\
 
+\textbf{CoordenadasThread} accede periódicamente a la última localización guardada en \textit{LocationManager}, como se explicaba en la sección anterior.\\
+
+\textbf{FileThread} se encarga de lanzar los dos hilos de BluetoothThread y CoordenadasThread y, periódicamente, recoge los datos obtenidos por ambos. Estos son guardados mediante una clase llamada FileManager que es la encargada del manejo de archivos. El formato del archivo que se crea consiste en una línea por cada muestreo dividida de la siguiente manera:
+
+\begin{center}
 (latitud);(longitud);(coordenadaX);(coordenadaY);(coordenadaZ)
+\end{center}
 
- con una última línea indicando el tiempo total de la sesión de la siguiente manera, T(tiempo en milisegundos). Este archivo se guarda en una carpeta en el almacenamiento externo del móvil llamada accelbike; si no existe dicha carpeta, la clase se encarga de crearla.
+con una última línea indicando el tiempo total de la sesión de la siguiente manera: 
+
+\begin{center}
+T(tiempo en milisegundos)
+\end{center}
+
+Este archivo se guarda en una carpeta en el almacenamiento externo del móvil llamada accelbike; si no existe dicha carpeta, la clase se encarga de crearla.
 
 Para detener la sesión aprovechamos una característica de los hilos en Java que nos permite diferenciarlos de manera única a través de un nombre dado por una cadena de caracteres. De este modo podemos detener un determinado hilo a través de este nombre, por lo que basta con finalizarlos para que se termine la sesión.
 

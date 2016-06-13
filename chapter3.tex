@@ -58,7 +58,7 @@ En cuanto a los periféricos de entrada/salida, la mayoría de las placas de des
 
 El protocolo SPI consiste en el envío de la señal de reloj del maestro y en cada impulso de reloj se envía un bit al esclavo y recibe un bit de éste. Los nombres de las señales son SCK para el reloj, MOSI para el Maestro Out Esclavo In, y MISO para Maestro In Esclavo Out.
 
-El protocolo I2C, usa dos cables, uno para el reloj (SCL) y otro para el dato (SDA). El maestro y esclavo envían datos por el mismo cable, el cual es controlado por el maestro, que crea la señal de reloj. Este protocolo utiliza direccionamiento, es decir, el primer byte enviado por el maestro se forma de 7 bits para la dirección (así que permite comunicarse con hasta 127 dispositivos) y un bit de lectura/escritura, indicando si el próximo byte vendrá desde el maestro o el esclavo. Esta tecnología se ampliará en el Capítulo~\ref{makereference4.8}.
+El protocolo I2C, usa dos cables, uno para el reloj (SCL) y otro para el dato (SDA). El maestro y esclavo envían datos por el mismo cable, el cual es controlado por el maestro, que crea la señal de reloj. Este protocolo utiliza direccionamiento, es decir, el primer byte enviado por el maestro se forma de 7 bits para la dirección (así que permite comunicarse con hasta 127 dispositivos) y un bit de lectura/escritura, indicando si el próximo byte vendrá desde el maestro o el esclavo. Esta tecnología se ampliará en el Capítulo~\ref{makereference5.1.1}.
 
 \section{Selección de plataformas de desarrollo}
 \label{makereference3.3}
@@ -116,7 +116,7 @@ El modelo escogido es el PSoC 4 BLE que provee de una completa solución para co
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
-    \includegraphics[width=\linewidth]{figures/cypress_placa_desarrollo} % TODO hacer que esto no quede horrible
+    \includegraphics[scale=0.8]{figures/cypress_placa_desarrollo} % TODO hacer que esto no quede horrible
 
     \caption[PSoC 4 BLE, placa de desarrollo]{PSoC 4 BLE, placa de desarrollo, en esta placa se conecta el PSoC para poder programarlo, y añade más funcionalidad incorporando elementos como botones programables, un LED RGB, un panel deslizante, etc.}
 
