@@ -20,7 +20,7 @@
 %\label{ch:chapter1}
 \label{makereference}
 
-Entre los años 2008 y 2009 comenzaron a usar el concepto Internet de las cosas (abreviado IoT) como una apuesta hacia el futuro, cuyo objetivo era interconectar dispositivos digitales a internet.
+Entre los años 2008 y 2009 se comenzó a usar el concepto Internet de las cosas (abreviado IoT) como una apuesta hacia el futuro, cuyo objetivo era interconectar dispositivos digitales a internet.
 
 Esto ya es una realidad, con mayor frecuencia encontramos nuevos dispositivos capaces de conectarse a internet, permitiendo al usuario su manejo desde cualquier parte del mundo. Con ello se abre camino a nuevas oportunidades haciendo la vida más cómoda al usuario y proporcionándole mayor seguridad y control.
 
@@ -91,24 +91,72 @@ Para la comodidad del usuario, toda la información de la ruta se recogerá en s
 
 \subsection{Rodrigo Claudio Miguez Rein}
 
-La tarea principal que he realizado durante este proyecto es la de la programación de la placa nRF51-DK de Nordic para configurar la recepción de las muestras de acelerometría utilizando el bus de datos I2C y el envío de éstas por medio de la tecnología Bluetooth Low Energy.
+La tarea principal que he realizado durante este proyecto es la de la programación de la placa nRF51-DK de Nordic para configurar la recepción de las muestras de acelerometría utilizando el bus de datos I2C y el envío de éstas por medio de la tecnología Bluetooth Low Energy. Además he realizado la parte BLE de la aplicación Android.
 
 En cuanto elegimos este proyecto, empecé a recopilar información junto con mis compañeros sobre las distintas soluciones \textit{System on Chip} con Bluetooth Smart integrado disponibles en el mercado. Para ello me informé sobre las tecnologías disponibles para realizar la conexión con un acelerómetro y sobre qué características necesitábamos en términos de procesamiento, memoria RAM y flash.
 
 Durante este periodo también comencé a investigar sobre el funcionamiento y las características de Bluetooth Low Energy, buscando material de referencia para aprender todo lo posible sobre ésta.\\
 
-Una vez escogimos dos placas de desarrollo, el kit CY8CKIT-042-BLE de la empresa Cypress Semiconductor y el modelo nRF51-DK de Nordic Semiconductor, comenzamos la fase de pruebas para familiarizarnos con las tecnologías que íbamos a usar. En mi caso, realicé las pruebas con la placa de Cypress. Para ello busqué tutoriales en la página web oficial de la empresa~\cite{CypressTutorials} y encontré un repositorio en GitHub con 100 proyectos de ejemplo~\cite{100Projects} que me ayudaron en gran medida para entender la programación del kit y los métodos para utilizar Bluetooth Low Energy y para realizar la comunicación con otros dispositivos. Descargué la aplicación móvil \textit{CySmart}, que permite probar los códigos de ejemplo, con una interfaz limpia y clara, que además ofrece su código fuente, lo que me sirvió para comprobar cómo se realiza el enlace por Bluetooth Low Energy en el lado de Android.
-Entre los ejemplos disponibles para esta placa se encuentra: un sistema de alerta, que consiste en el envío de una señal al dispositivo para apagar o encender un LED y para hacer que parpadee, una aplicación de sensor de proximidad, que aprovecha un circuito integrado en la placa de desarrollo diseñado para este fin, enviando el valor recogido por el sensor al móvil, donde, con la aplicación CySmart mencionada anteriormente, se puede visualizar como una escala.
+Una vez escogimos dos placas de desarrollo, el kit CY8CKIT-042-BLE~\cite{CypressDatasheet} de la empresa Cypress Semiconductor y el modelo nRF51-DK de Nordic Semiconductor, comenzamos la fase de pruebas para familiarizarnos con las tecnologías que íbamos a usar. En mi caso, realicé las pruebas con la placa de Cypress. Para ello busqué tutoriales en la página web oficial de la empresa~\cite{CypressTutorials} y encontré un repositorio en GitHub con 100 proyectos de ejemplo~\cite{100Projects} que me ayudaron en gran medida para entender la programación del kit y los métodos para utilizar Bluetooth Low Energy y para realizar la comunicación con otros dispositivos. Descargué la aplicación móvil \textit{CySmart}, que permite probar los códigos de ejemplo con una interfaz limpia y clara, que además ofrece su código fuente, lo que me sirvió para comprobar cómo se realiza el enlace por Bluetooth Low Energy en el lado de Android.
+
+Entre los ejemplos disponibles para esta placa se encuentran: un sistema de alerta, que consiste en el envío de una señal al dispositivo para apagar o encender un LED y para hacer que parpadee, una aplicación de sensor de proximidad, que aprovecha un circuito integrado en la placa de desarrollo diseñado para este fin, enviando el valor recogido por el sensor al móvil, donde, con la aplicación CySmart mencionada anteriormente, se puede visualizar como una escala.
 
 Durante la fase de pruebas realicé el código que permitía al CY8CKIT-042-BLE leer por SPI los datos recogidos de un circuito, consistente en un conversor analógico-digital contectado a una fotoresistencia, y enviarlos por Bluetooth Low Energy a una aplicación de prueba realizada en Android. Seguidamente comencé con las pruebas para recibir por I2C los datos del acelerómetro. Estas pruebas se detallarán más adelante en esta memoria.
 
 Cuando elegimos la placa de Nordic, escogí continuar la parte del proyecto que se centraba en la programación de ésta, ya que me había resultado muy interesante la experiencia con el kit de Cypress. Realicé la conexión por I2C de Xtrinsic Sense-Board, una placa que contiene un chip de acelerometría. Para ello busqué su \textit{datasheet}~\cite{DatasheetAcc} para saber qué pines utilizaba, de qué manera recolectaba las muestras y cómo había que realizar la comunicación entre nRF51-DK y este periférico para lograr una transmisión correcta de los datos. Una vez pude comprobar que se recibía la información de acelerometría, elaboré un sistema para filtrar el ruido presente en las muestras y realicé la configuración de la placa de Nordic para que las transmitiera utilizando Bluetooth Low Energy.
 
-En la parte de la aplicación Android, ayudé con el diseño de las clases que se iban a utilizar elaborando diagramas, y proporcioné \textit{feedback} a mis compañeros para hacerles saber en qué formato se iba a mandar la información por Bluetooth para que pudieran configurar en consecuencia la recepción en el móvil. 
+En la parte de la aplicación Android, ayudé con el diseño de las clases que se iban a utilizar elaborando diagramas, y proporcioné \textit{feedback} a mis compañeros para hacerles saber en qué formato se iba a mandar la información por Bluetooth para que pudieran configurar en consecuencia la lectura de éstos en el móvil.
 
 \subsection{David Muñoz Lorenzo}
 
+Mi labor en el proyecto en su fase inicial, como la de mis compañeros, fue analizar en detalle los componentes que íbamos a utilizar para la elaboración del sistema de acelerometría. En primer lugar debíamos encontrar en internet los microprocesadores Bluetooth Low Energy que dieran solución al objetivo del proyecto.
+Se planteó hacer la búsqueda eligiendo los componentes más económicos y con las prestaciones suficientes para realizar el proyecto, siendo elaborado como producto final. Analicé en profundidad microprocesadores de diferentes marcas y características que debían ser compatibles con las conexiones SPI e I2C.
+
+Se decidió elegir 2 placas de desarrollo, nRF51-DK de Nordic Semiconductor y CY8CKIT-042-BLE de la empresa Cypress Semiconductor, que nos ofrecían dichas conexiones, así como Bluetooth de bajo consumo y múltiples periféricos, lo cual eran soluciones más que suficientes para empezar.
+
+Para realizar la primera prueba con la placa de Nordic, tuvimos que crear un sencillo circuito para recoger datos desde una fotoresistencia, y convertir la señal que recibíamos en una señal digital para poder enviársela a la placa de desarrollo.
+
+Participé en la creación de dicho circuito así como en las pruebas de desarrollo para realizar la conexión por SPI y recibir los datos que transmitía la fotoresistencia.
+
+Tuvimos que familiarizarnos con el entorno de desarrollo llamado mbed que utilizaba la placa de Nordic. En su repositorio~\cite{repoMbed} pudimos probar ejemplos de conexiones SPI que adaptamos a la placa utilizada, mirando en su ficha técnica~\cite{NordicDatasheet} la correcta conexión de sus pines.
+
+La manera de interactuar con la fotoresistencia a través de la placa fue activar los LEDs que esta contiene, alternándolos según su valor de entrada. De esta forma verificamos que el paso de datos funcionaba correctamente.
+
+La siguiente prueba de conexión fue a través de I2C, tuvimos que investigar y documentarnos bien sobre este bus de datos. Se cambió el circuito por un acelerómetro que conectamos por I2C a la placa de desarrollo.
+
+En este punto fue necesario investigar la forma de crear una aplicación en Android, de tal forma que esta pudiera conectarse por Bluetooth Low Energy a la placa nRF51-DK de Nordic y visualizar los datos recibidos. Para realizar la prueba de conexión por Bluetooth encontramos en el repositorio de mbed algunos ejemplos que nos ayudaron a poder implementar el módulo BLE.
+
+Para realizar la primera prueba de conexión Bluetooth, tuve que descargar una aplicación de pruebas que utiliza la empresa Nordic para testear sus conexiones. Realizado con éxito esta prueba decidimos comenzar a desarrollar lo que iba a ser nuestra aplicación Accelbike.
+
+Realicé una maqueta visual (\textit{mockup}) de cada vista para poder tener un primer diseño de la aplicación en el que fijarnos.
+Participé en la creación de la aplicación en Android desarrollando la estructura y parte de las vistas y así como algunos componentes como los menús y pestañas principales.
+
+Una vez implementado el módulo BLE en la aplicación móvil y establecer la conexión con la placa, necesitábamos visualizar los datos en una de las vistas.
+Para ello realicé pruebas obteniendo los datos del acelerómetro del móvil y realizando la petición a través de un servicio interno. Realizada esta prueba con éxito sustituimos esos valores por los que nos suministraba el acelerómetro.
+Debíamos mostrar el circuito recorrido por un ciclista desde que se pone en marcha hasta que finaliza su recorrido. Para visualizar el mapa utilizamos la API de Google Maps~\cite{APIGoogleMaps}.
+
+Para poder utilizar sus funcionalidades principales tuve que registrarme en la API de Google Maps, incorporamos al proyecto una clave única que para tener acceso a las funcionalidades de su servidor. Activé los permisos necesarios para obtener el mapa de Google y sus configuraciones necesarias para ajustarlo a nuestra aplicación. Utilizando la clase polilíneas de Google pude crear las líneas sobre el mapa, se pudo visualizar con éxito en la vista Actividades.
+
+
 \subsection{Alexis Vizcaya Hervella}
+
+Mi contribución al proyecto ha sido principalmente la de estructurar el código de la aplicación Android, centrándome en la parte del análisis de los datos y los cálculos realizados con ellos, así como de la lectura y escritura de los mismos.  
+
+En el primer cuatrimestre iniciamos en conjunto una investigación general haciendo un análisis de los dispositivos que incorporaran la tecnología Bluetooth Low Energy (BLE) disponibles en el mercado que se ajustaran a los requisitos del proyecto, comparamos precios, características, etc. y finalmente escogimos las placas de desarrollo de Cypress (PSoC 4 BLE) y Nordic (nRF51-DK). Una vez elegidas las placas, investigué los buses de datos I2C y SPI puesto que estas eran las tecnologías disponibles en ambas para la comunicación con un acelerómetro. Además inicie el proceso de familiarización con los entornos de desarrollo.
+
+En una primera etapa realice ejemplos con la placa de Cypress en su entorno de desarrollo (PSoC Creator) ya que descubrimos la existencia de un repositorio en GitHub que contenía 100 proyectos de ejemplo, probé con varios ejemplos para comprender la forma de diseñar pequeños programas en dicha placa, además disponía de una app para el teléfono móvil para poder conectar con la placa y así poder realizar estos ejemplos. 
+
+Con la placa de Nordic ocurrió algo similar, con su entorno de desarrollo mbed, cuyo repositorio oficial contiene multitud de ejemplos, con los que empecé a investigar acerca del funcionamiento de esta. Como por ejemplo uno con el que empecé a establecer la conexión Bluetooth con el móvil, consistente en detectar la pulsación de un botón en la placa y mandar la información del estado de éste a una app.
+
+Una vez finalizada esta etapa de aprendizaje hicimos pruebas de conexión entre la placas y un circuito MCP mediante SPI. El circuito constaba de una fotorresistencia conectada a un ADC con la que comprobamos que al cambiar la luminosidad que recibÍa la resistencia los datos que obteníamos en la placa variaban. El siguiente paso fue conectar un acelerómetro mediante I2C a la placa de Nordic, pudimos comprobar que los datos se recibían correctamente a través de los LEDs de los que disponía la placa, y una vez comprobado el correcto funcionamiento, nos dispusimos a realizar la conexión mediante BLE entre una pequeña app y la nRF51-DK. 
+
+Una vez decidida la placa con la que íbamos a afrontar el proyecto, comenzamos con el diseño de la aplicación Android, forme parte del diseño de la estructura mediante un patrón Modelo Vista Controlador (MVC) y en el desarrollo del menú principal de la aplicación. 
+
+A partir de aquí me centré en la parte de lectura y escritura de la información recibida, decidiendo cómo se iban a llevar a cabo estos procesos. 
+Sobre la lectura desarrolle el proceso por el cual se finaliza una sesión y se traslada toda la información a un vista con un mapa de Google Maps con la ruta dibujada en forma de polilínea y una serie de campos para mostrar la información procesada. 
+Sobre la escritura, elegí la forma de guardar los datos en la memoria externa del teléfono móvil como se describirá en esta memoria.   
+
+Para recoger los datos de las diferentes fuentes, programé la estructura de hilos que se utiliza en la aplicación, ya que teníamos que tener un control para asignar diferentes periodos de tiempo, debido a que por ejemplo no es necesario recopilar la información del GPS tan a menudo como la del acelerómetro.
 
 %\begin{figure}[htb]%t=top, b=bottom, h=here
 %

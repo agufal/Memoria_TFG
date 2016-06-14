@@ -3,21 +3,29 @@
 \chapter{Mediciones y calibrado}
 \label{makereference7}
 
-\section{Mediciones}
+\section{Mediciones de consumo}
 
-\subsection{Acelerometría}
-
-\subsection{Consumo}
-
-Para comprobar la eficiencia de consumo de energía de nuestra placa con el programa final cargado, la conectamos a un osciloscopio y recogimos los siguientes datos.
+El objetivo principal de Bluetooth Low Energy es incorporarse a dispositivos de bajo consumo, y ser lo más eficiente posible energéticamente. Por ello decidimos comprobar la eficiencia de consumo de energía de nuestra placa, conectándola a un osciloscopio y recogiendo los datos del amperaje durante la ejecución del programa, en el que se recogen los datos del acelerómetro, se envían por BLE y se entra en un estado de \textit{espera}. La gráfica resultante se muestra en la Figura~\ref{}.
 
 % Imagen Primeras mediciones
 
-Se puede comprobar que  en los períodos en los que está "esperando" tiene un consumo el
+Se puede comprobar que no tiene un consumo muy elevado, con un máximo de 10 mA, que es cuando realiza la comunicación por BLE y un mínimo de 3 mA en los períodos inactivos. En los períodos de inactividad observamos que consume más de lo cabría esperar. Esto es debido a que pensábamos erróneamente que la función que utilizábamos para realizar la espera pondría al procesador en modo \textit{deep sleep}, que permitiría disminuir todo lo posible el uso de energía.
+
+Buscando en la API de mbed, encontramos la forma de entrar en este modo, que se realiza con la funcion \textit{sleep( ms )}. Esta función permite desactivar todas las funcionalidades que no sean estrictamente necesarias para ahorrar energía, entrando en lo que se denomina \textit{Wait for Interrupt}, es decir, saldrá de este modo únicamente cuando detecte una interrupción. 
+
+El punto negativo de esto es que no hace discriminación entre los tipos de interrupción, por lo que puede salir del modo \textit{sleep} aunque no se lo hayamos indicado. Para evitar esto utilizamos un \textit{callback} que se ejecutará cada segundo, activando una variable booleana. Esta variable controla un bucle en el que, si sale del modo \textit{sleep} y no es por nuestra interrupción, vuelve a ejecutar un \textit{sleep}.
+
+Una vez implementada esta funcionalidad, volvimos a realizar la prueba de consumo y esta vez obtuvimos resultados más satisfactorios, como se puede apreciar en la Figura~\ref{}
+
+% Imagen segundas mediciones
+
+%% Cómo se calcularía el tiempo que nos puede durar la pila con los datos?
 
 \section{Calibrado}
 
+Debido a la presencia constante de la aceleración de la gravedad en cualquier objeto, el acelerómetro recoge siempre este valor, repartido entre los ejes (x, y, z). En llano, la aceleración o deceleración se produce sólo en el eje x, pero cuando nos hallamos en una pendiente este valor se reparte entre los ejes (x, z), por lo que parte de la aceleración se juntará con el valor de la gravedad.
 
+Para una correcta medición, debemos eliminar el factor gravedad mediante un calibrado. Una manera de hacerlo es hallar la magnitud del vector y eliminar 1 g al resultado. El problema de esto es que ya que la magnitud no tiene signo, perdemos la noción de estar acelerando o decelerando.
 
 \cleardoublepage
 
