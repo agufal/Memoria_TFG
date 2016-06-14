@@ -79,15 +79,32 @@ Para la comodidad del usuario, toda la información de la ruta se recogerá en s
 
 \begin{figure}[h]%t=top, b=bottom, h=here
 	\centering
-    \includegraphics[scale=0.6]{figures/esquema_accelbike.jpg} % TODO hacer que esto no quede horrible
+    \includegraphics[scale=0.5]{figures/esquema_accelbike.jpg}
     \caption[Esquema del funcionamiento del proyecto]{Esquema del funcionamiento del proyecto. El dispositivo móvil recoge datos tanto de la localización como de un sensor de acelerometría.}
    	\label{figuraEsquemaAccelbike}
 \end{figure}
+
+\newpage % Esto esta aqui para que la imagen anterior no se meta dentro de las contribuciones
 
 \section{Contribuciones Personales}
 \label{makereference1.4}
 
 \subsection{Rodrigo Claudio Miguez Rein}
+
+La tarea principal que he realizado durante este proyecto es la de la programación de la placa nRF51-DK de Nordic para configurar la recepción de las muestras de acelerometría utilizando el bus de datos I2C y el envío de éstas por medio de la tecnología Bluetooth Low Energy.
+
+En cuanto elegimos este proyecto, empecé a recopilar información junto con mis compañeros sobre las distintas soluciones \textit{System on Chip} con Bluetooth Smart integrado disponibles en el mercado. Para ello me informé sobre las tecnologías disponibles para realizar la conexión con un acelerómetro y sobre qué características necesitábamos en términos de procesamiento, memoria RAM y flash.
+
+Durante este periodo también comencé a investigar sobre el funcionamiento y las características de Bluetooth Low Energy, buscando material de referencia para aprender todo lo posible sobre ésta.\\
+
+Una vez escogimos dos placas de desarrollo, el kit CY8CKIT-042-BLE de la empresa Cypress Semiconductor y el modelo nRF51-DK de Nordic Semiconductor, comenzamos la fase de pruebas para familiarizarnos con las tecnologías que íbamos a usar. En mi caso, realicé las pruebas con la placa de Cypress. Para ello busqué tutoriales en la página web oficial de la empresa~\cite{CypressTutorials} y encontré un repositorio en GitHub con 100 proyectos de ejemplo~\cite{100Projects} que me ayudaron en gran medida para entender la programación del kit y los métodos para utilizar Bluetooth Low Energy y para realizar la comunicación con otros dispositivos. Descargué la aplicación móvil \textit{CySmart}, que permite probar los códigos de ejemplo, con una interfaz limpia y clara, que además ofrece su código fuente, lo que me sirvió para comprobar cómo se realiza el enlace por Bluetooth Low Energy en el lado de Android.
+Entre los ejemplos disponibles para esta placa se encuentra: un sistema de alerta, que consiste en el envío de una señal al dispositivo para apagar o encender un LED y para hacer que parpadee, una aplicación de sensor de proximidad, que aprovecha un circuito integrado en la placa de desarrollo diseñado para este fin, enviando el valor recogido por el sensor al móvil, donde, con la aplicación CySmart mencionada anteriormente, se puede visualizar como una escala.
+
+Durante la fase de pruebas realicé el código que permitía al CY8CKIT-042-BLE leer por SPI los datos recogidos de un circuito, consistente en un conversor analógico-digital contectado a una fotoresistencia, y enviarlos por Bluetooth Low Energy a una aplicación de prueba realizada en Android. Seguidamente comencé con las pruebas para recibir por I2C los datos del acelerómetro. Estas pruebas se detallarán más adelante en esta memoria.
+
+Cuando elegimos la placa de Nordic, escogí continuar la parte del proyecto que se centraba en la programación de ésta, ya que me había resultado muy interesante la experiencia con el kit de Cypress. Realicé la conexión por I2C de Xtrinsic Sense-Board, una placa que contiene un chip de acelerometría. Para ello busqué su \textit{datasheet}~\cite{DatasheetAcc} para saber qué pines utilizaba, de qué manera recolectaba las muestras y cómo había que realizar la comunicación entre nRF51-DK y este periférico para lograr una transmisión correcta de los datos. Una vez pude comprobar que se recibía la información de acelerometría, elaboré un sistema para filtrar el ruido presente en las muestras y realicé la configuración de la placa de Nordic para que las transmitiera utilizando Bluetooth Low Energy.
+
+En la parte de la aplicación Android, ayudé con el diseño de las clases que se iban a utilizar elaborando diagramas, y proporcioné \textit{feedback} a mis compañeros para hacerles saber en qué formato se iba a mandar la información por Bluetooth para que pudieran configurar en consecuencia la recepción en el móvil. 
 
 \subsection{David Muñoz Lorenzo}
 
