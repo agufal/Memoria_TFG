@@ -5,9 +5,14 @@
 
 \section{Mediciones de consumo}
 
-El objetivo principal de Bluetooth Low Energy es incorporarse a dispositivos de bajo consumo, y ser lo más eficiente posible energéticamente. Por ello decidimos comprobar la eficiencia de consumo de energía de nuestra placa, conectándola a un osciloscopio y recogiendo los datos del amperaje durante la ejecución del programa, en el que se recogen los datos del acelerómetro, se envían por BLE y se entra en un estado de \textit{espera}. La gráfica resultante se muestra en la Figura~\ref{}.
+El objetivo principal de Bluetooth Low Energy es incorporarse a dispositivos de bajo consumo, y ser lo más eficiente posible energéticamente. Por ello decidimos comprobar la eficiencia de consumo de energía de nuestra placa, conectándola a un osciloscopio y recogiendo los datos del amperaje durante la ejecución del programa, en el que se recogen los datos del acelerómetro, se envían por BLE y se entra en un estado de \textit{espera}. La gráfica resultante se muestra en la Figura~\ref{figuraConsumoMayo}.
 
-% Imagen Primeras mediciones
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[width=\textwidth]{figures/consumo_mayo2.png}
+    \caption[Primera gráfica de corriente]{Primera gráfica de corriente}
+   	\label{figuraConsumoMayo}
+\end{figure}
 
 Se puede comprobar que no tiene un consumo muy elevado, con un máximo de 10 mA, que es cuando realiza la comunicación por BLE y un mínimo de 3 mA en los períodos inactivos. En los períodos de inactividad observamos que consume más de lo cabría esperar. Esto es debido a que pensábamos erróneamente que la función que utilizábamos para realizar la espera pondría al procesador en modo \textit{deep sleep}, que permitiría disminuir todo lo posible el uso de energía.
 
@@ -15,9 +20,14 @@ Buscando en la API de mbed, encontramos la forma de entrar en este modo, que se 
 
 El punto negativo de esto es que no hace discriminación entre los tipos de interrupción, por lo que puede salir del modo \textit{sleep} aunque no se lo hayamos indicado. Para evitar esto utilizamos un \textit{callback} que se ejecutará cada segundo, activando una variable booleana. Esta variable controla un bucle en el que, si sale del modo \textit{sleep} y no es por nuestra interrupción, vuelve a ejecutar un \textit{sleep}.
 
-Una vez implementada esta funcionalidad, volvimos a realizar la prueba de consumo y esta vez obtuvimos resultados más satisfactorios, como se puede apreciar en la Figura~\ref{}
+Una vez implementada esta funcionalidad, volvimos a realizar la prueba de consumo y esta vez obtuvimos resultados más satisfactorios, como se puede apreciar en la Figura~\ref{figuraConsumoJunio}
 
-% Imagen segundas mediciones
+\begin{figure}[h]%t=top, b=bottom, h=here
+	\centering
+    \includegraphics[width=\textwidth]{figures/consumo_junio2.png}
+    \caption[Segunda gráfica de corriente]{Segunda gráfica de corriente}
+   	\label{figuraConsumoJunio}
+\end{figure}
 
 %% Cómo se calcularía el tiempo que nos puede durar la pila con los datos?
 
