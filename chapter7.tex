@@ -14,7 +14,7 @@ El objetivo principal de Bluetooth Low Energy es incorporarse a dispositivos de 
    	\label{figuraConsumoMayo}
 \end{figure}
 
-Se puede comprobar que no tiene un consumo muy elevado, con un máximo de 10 mA, que es cuando realiza la comunicación por BLE y un mínimo de cerca de 5 mA en los períodos inactivos. En los períodos de inactividad observamos que consume más de lo cabría esperar. Esto es debido a que pensábamos erróneamente que la función que utilizábamos para realizar la espera pondría al procesador en modo \textit{deep sleep}, que permitiría disminuir todo lo posible el uso de energía.
+Se puede comprobar que no tiene un consumo muy elevado, con un máximo algo menor que 9.5 mA, que es cuando realiza la comunicación por BLE y un mínimo de cerca de 5 mA en los períodos inactivos. En los períodos de inactividad observamos que consume más de lo cabría esperar. Esto es debido a que pensábamos erróneamente que la función que utilizábamos para realizar la espera pondría al procesador en modo \textit{deep sleep}, que permitiría disminuir todo lo posible el uso de energía.
 
 Buscando en la API de mbed, encontramos la forma de entrar en este modo, que se realiza con la función \textit{sleep( ms )}~\cite{APIDeepSleep}. Esta función ejecuta lo que se denomina un \textit{Wait for Interrupt}, que es una instrucción del repertorio de instrucciones de ARM que deja al procesador en modo de bajo consumo, parando todas las funcionalidades para ahorrar energía hasta que llegue una interrupción. La función \textit{sleep} que implementa la API de mbed determina dinámicamente en qué modo de bajo consumo se entrará.
 
