@@ -88,13 +88,11 @@ A continuación describiremos la funcionalidad de los casos de uso más importan
     \label{figuraDiagramaClasesBLE}
 \end{figure}
 
-Para realizar la comunicación entre la placa y el móvil, primero debemos escanear los dispositivos BLE cercanos. Para ello utilizamos una clase de la API de Android llamada \textit{BluetoothLeScanner}, que busca exclusivamente dispositivos Bluetooth Low Energy y nos devuelve la información recogida en los paquetes de anuncio de los dispositivos en forma de \textit{BluetoothDevice}.
+Para realizar la comunicación entre la placa y el móvil, primero debemos escanear los dispositivos BLE cercanos. Para ello utilizamos una clase de la API de Android llamada \textit{BluetoothLeScanner}, que busca exclusivamente dispositivos Bluetooth Low Energy y nos devuelve la información recogida en los paquetes de anuncio sobre los dispositivos en forma de \textit{BluetoothDevice}.
 
 Una vez obtenidos, los mostramos en forma de lista en la que aparece el nombre de cada dispositivo, como se muestra en la Figura~\ref{figuraAPPConfigAyuda}, para que el usuario elija a cuál se quiere conectar. 
 
 Hemos creado una clase \textit{BLEGatt}, que es la que se encarga de mantener la información del enlace. Para establecer la conexión, se hace uso de esta clase, que configura el GATT para empezar a explorar los servicios, como se explicará más adelante.
-
-%Para realizar la comunicación entre la placa y el móvil utilizamos una clase (BLEGatt) con el patrón Singleton. Para configurar esta clase de modo que se realice la conexión tenemos un clase auxiliar llamada BluetoothManager, que utiliza un BLEScanner para escanear los dispositivos cercanos. A esta clase se accede desde la clase ConfigFragment llamando al controlador, y éste a su vez crea un comando, ComandoEscanear, que es el que utiliza a BluetoothManager para realizar las conexiones. 
 
 \subsection{GPS}
 \label{makereference6.2.2}
@@ -112,7 +110,7 @@ Una vez activado, la API de Android nos ofrece una clase llamada \textit{Locatio
     \label{figuraDiagramaClasesMarcha}
 \end{figure}
 
-Para llevar a cabo una sesión tenemos tres clases que heredan de Thread: BluetoothThread, CoordenadasThread y FileThread. De ese modo, la lectura de los datos del acelerómetro, los datos de la ubicación y la escritura en el archivo se hacen de manera independiente.\\
+Para llevar a cabo una sesión tenemos tres clases, como se puede ver en la Figura~\ref{figuraDiagramaClasesMarcha}, que heredan de Thread: BluetoothThread, CoordenadasThread y FileThread. De ese modo, la lectura de los datos del acelerómetro, los datos de la ubicación y la escritura en el archivo se hacen de manera independiente.\\
 
 \textbf{BluetoothThread} utiliza la clase BLEGatt explicada anteriormente para leer las características recibidas. Como se menciona en la Sección~\ref{makereference5.2}, hemos configurado la placa nRF51-DK para que tenga un servicio con UUID 0xA000, que contiene la característica con UUID 0xA001, que es la que nos interesa para obtener la información del acelerómetro. Para descubrir este servicio, se puede realizar lo que se llama \textit{escaneo de servicios}, que devuelve una lista de los servicios del dispositivo, pero como ya conocemos de antemano el UUID, podemos acceder a él directamente.
 
