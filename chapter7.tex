@@ -11,7 +11,7 @@ El objetivo principal de Bluetooth Low Energy es incorporarse a dispositivos de 
 
 Se puede comprobar que no tiene un consumo muy elevado, con un máximo de 10 mA, que es cuando realiza la comunicación por BLE y un mínimo de 3 mA en los períodos inactivos. En los períodos de inactividad observamos que consume más de lo cabría esperar. Esto es debido a que pensábamos erróneamente que la función que utilizábamos para realizar la espera pondría al procesador en modo \textit{deep sleep}, que permitiría disminuir todo lo posible el uso de energía.
 
-Buscando en la API de mbed, encontramos la forma de entrar en este modo, que se realiza con la funcion \textit{sleep( ms )}. Esta función permite desactivar todas las funcionalidades que no sean estrictamente necesarias para ahorrar energía, entrando en lo que se denomina \textit{Wait for Interrupt}, es decir, saldrá de este modo únicamente cuando detecte una interrupción. 
+Buscando en la API de mbed, encontramos la forma de entrar en este modo, que se realiza con la función \textit{sleep( ms )}~\cite{APIDeepSleep}. Esta función ejecuta lo que se denomina un \textit{Wait for Interrupt}, que es una instrucción del repertorio de instrucciones de ARM que deja al procesador en modo de bajo consumo, parando todas las funcionalidades para ahorrar energía hasta que llegue una interrupción. La función \textit{sleep} que implementa la API de mbed determina dinámicamente en qué modo de bajo consumo se entrará.
 
 El punto negativo de esto es que no hace discriminación entre los tipos de interrupción, por lo que puede salir del modo \textit{sleep} aunque no se lo hayamos indicado. Para evitar esto utilizamos un \textit{callback} que se ejecutará cada segundo, activando una variable booleana. Esta variable controla un bucle en el que, si sale del modo \textit{sleep} y no es por nuestra interrupción, vuelve a ejecutar un \textit{sleep}.
 
@@ -52,5 +52,5 @@ Otra posibilidad que sería de utilidad es la de fijar una luz de freno a la pla
 
 En relación con esto, otro punto importante de cara al futuro es el de utilizar los datos que se recogen de acelerometría para comprobar movimientos muy bruscos (como los que se darían en caso de accidente) para activar un sistema que avise a los servicios de emergencia en caso de que el usuario no responda en un breve tiempo.
 
-Se podrían realizar más cálculos con los datos obtenidos para poder sacar más información de la ruta. Además, aprovechando que la placa XTRINSIC-SENSE-BOARD contiene, aparte del acelerómetro que usamos, un magnetómetro y un sensor de presión. 
+Se podrían realizar más cálculos con los datos obtenidos para poder sacar más información de la ruta. Además, aprovechando que la placa XTRINSIC-SENSE-BOARD contiene, aparte del acelerómetro que usamos, un magnetómetro y un sensor de presión, se podría recoger mucha más información sobre el esfuerzo realizado durante el trayecto.
 

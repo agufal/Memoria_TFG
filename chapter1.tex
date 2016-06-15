@@ -126,17 +126,12 @@ La siguiente prueba de conexión fue a través de I2C, tuvimos que investigar y 
 
 En este punto fue necesario investigar la forma de crear una aplicación en Android, de tal forma que esta pudiera conectarse por Bluetooth Low Energy a la placa nRF51-DK de Nordic y visualizar los datos recibidos. Para realizar la prueba de conexión por Bluetooth encontramos en el repositorio de mbed algunos ejemplos que nos ayudaron a poder implementar el módulo BLE.
 
-Para realizar la primera prueba de conexión Bluetooth, tuve que descargar una aplicación de pruebas que utiliza la empresa Nordic para testear sus conexiones. Realizado con éxito esta prueba decidimos comenzar a desarrollar lo que iba a ser nuestra aplicación Accelbike.
-
 Realicé una maqueta visual (\textit{mockup}) de cada vista para poder tener un primer diseño de la aplicación en el que fijarnos.
-Participé en la creación de la aplicación en Android desarrollando la estructura y parte de las vistas y así como algunos componentes como los menús y pestañas principales.
+Participé en la creación de la aplicación en Android desarrollando la interfaz de usuario y su estructura. Estructuré la aplicación con un tipo de componente de Android llamado Fragment que se usa mucho en la actualidad y que sirve para separar las diferentes vistas para que puedan tener su propia lógica de manera independiente. Quise darle un aspecto y usabilidad propios de las nuevas aplicaciones de última generación utilizando componentes gráficos de Material design de Google~\cite{MaterialDesignGoogle}. De esta forma nuestra aplicación se beneficia de los últimos avances visuales asegurando una óptima experiencia de usuario. 
 
-Una vez implementado el módulo BLE en la aplicación móvil y establecer la conexión con la placa, necesitábamos visualizar los datos en una de las vistas.
-Para ello realicé pruebas obteniendo los datos del acelerómetro del móvil y realizando la petición a través de un servicio interno. Realizada esta prueba con éxito sustituimos esos valores por los que nos suministraba el acelerómetro.
-Debíamos mostrar el circuito recorrido por un ciclista desde que se pone en marcha hasta que finaliza su recorrido. Para visualizar el mapa utilizamos la API de Google Maps~\cite{APIGoogleMaps}.
+Realicé pruebas obteniendo los datos del GPS del móvil y realizando la petición a través de un servicio interno. Utilicé la interfaz LocationListener que nos  permite conectarnos con los servicios de ubicación del dispositivo móvil. Pude obtener la latitud y longitud de la ubicación en la que nos encontramos y a través de unos parámetros podemos cambiar la distancia ( metros ) que actualiza el GPS así como configurar la frecuencia de muestreo ( milisegundos ) de las coordenadas. Posteriormente se utilizó un hilo para poder recibir los datos del acelerómetro aunque la aplicación estuviera activa en segundo plano.
 
-Para poder utilizar sus funcionalidades principales tuve que registrarme en la API de Google Maps, incorporamos al proyecto una clave única que para tener acceso a las funcionalidades de su servidor. Activé los permisos necesarios para obtener el mapa de Google y sus configuraciones necesarias para ajustarlo a nuestra aplicación. Utilizando la clase polilíneas de Google pude crear las líneas sobre el mapa, se pudo visualizar con éxito en la vista Actividades.
-
+Debíamos mostrar el circuito recorrido por un ciclista desde que se pone en marcha hasta que finaliza su recorrido. Para visualizar el mapa utilizamos la API de Google Maps~\cite{APIGoogleMaps}. Para poder utilizar sus funcionalidades principales tuve que registrarme en la API de Google Maps, incorporamos al proyecto una clave única que para tener acceso a las funcionalidades de su servidor. Activé los permisos necesarios para obtener el mapa de Google y sus configuraciones necesarias para ajustarlo a nuestra aplicación. Utilizando la clase polilíneas de Google pude crear las líneas sobre el mapa, se pudo visualizar con éxito en la vista Actividades.
 
 \subsection{Alexis Vizcaya Hervella}
 
